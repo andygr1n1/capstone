@@ -1,14 +1,17 @@
 {
     "parser": "@babel/eslint-parser",
-    "extends": ["eslint:recommended"],
+    "extends": ["eslint:recommended", "plugin:react/recommended"],
     "env": {
         "browser": true,
         "node": true
     },
     "parserOptions": {
-        "ecmaVersion": 8,
+        "ecmaVersion": 2020,
         "sourceType": "module",
-        "requireConfigFile": false
+        "requireConfigFile": false,
+        "ecmaFeatures": {
+            "jsx": true
+        }
     },
     "rules": {
         "semi": 0

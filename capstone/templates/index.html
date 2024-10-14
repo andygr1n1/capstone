@@ -8,7 +8,8 @@
     <title>Index</title>
     <!-- <script src="https://cdn.tailwindcss.com"></script> -->
     {% stylesheet_pack 'app' %}
-    {% javascript_pack 'app' attrs='defer' %}
+    <!-- {% javascript_pack 'app' attrs='defer' %} -->
+    {% javascript_pack 'app' 'app_react' attrs='defer' %}
 </head>
 
 <body>
@@ -45,6 +46,7 @@
     <div class="bg-red-500">
         <div class="text-3xl bg-pink-500">Hello World</div>
     </div>
+    <div id="root"></div>
 
 
 </body>
