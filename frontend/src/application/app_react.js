@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { createRoot } from 'react-dom'
+import { createRoot } from 'react-dom/client'
+import { Topbar } from '../components/Topbar'
+
+import '../styles/index.scss'
 
 const Clock = () => {
     const [time, setTime] = useState(new Date())
@@ -24,3 +27,7 @@ const Clock = () => {
 const root = document.getElementById('root')
 const rootElement = createRoot(root)
 rootElement.render(<Clock />)
+
+const topbarRoot = document.getElementById('topbar')
+const topbarRootElement = createRoot(topbarRoot)
+topbarRootElement.render(<Topbar />)
