@@ -1,4 +1,6 @@
 1. initialized app with https://python-webpack-boilerplate.readthedocs.io/en/latest/
+ - python manage.py runserver
+ - npm run start
 <!-- 2. created django project and app
 3. created django models
 4. created django admin

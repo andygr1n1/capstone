@@ -25,9 +25,13 @@ const Clock = () => {
 }
 
 const root = document.getElementById('root')
-const rootElement = createRoot(root)
-rootElement.render(<Clock />)
-
+if (root) {
+    const rootElement = createRoot(root)
+    rootElement.render(<Clock />)
+}
 const topbarRoot = document.getElementById('topbar')
-const topbarRootElement = createRoot(topbarRoot)
-topbarRootElement.render(<Topbar />)
+if (topbarRoot) {
+    const topbarRootElement = createRoot(topbarRoot)
+    topbarRootElement.render(<Topbar />)
+    // console.log('topbarRoot', topbarRoot)
+}
