@@ -1,0 +1,30 @@
+{
+  "app_react.css": "/static/css/app_react.026d6c55d335f1a5b2ee.css",
+  "app_react.js": "/static/js/app_react.b781e295.js",
+  "css/app_react.026d6c55d335f1a5b2ee.css.map": "/static/css/app_react.026d6c55d335f1a5b2ee.css.map",
+  "entrypoints": {
+    "app_react": {
+      "assets": {
+        "js": [
+          "/static/js/runtime.9a1e72ae.js",
+          "/static/js/427.1ee3b39b.js",
+          "/static/js/app_react.b781e295.js"
+        ],
+        "css": [
+          "/static/css/app_react.026d6c55d335f1a5b2ee.css"
+        ]
+      }
+    }
+  },
+  "frontend/vendors/images/sample.jpg": "/static/frontend/vendors/images/sample.jpg",
+  "js/427.1ee3b39b.js": "/static/js/427.1ee3b39b.js",
+  "js/427.1ee3b39b.js.LICENSE.txt": "/static/js/427.1ee3b39b.js.LICENSE.txt",
+  "js/427.1ee3b39b.js.map": "/static/js/427.1ee3b39b.js.map",
+  "js/app_react.b781e295.js.map": "/static/js/app_react.b781e295.js.map",
+  "js/runtime.9a1e72ae.js.map": "/static/js/runtime.9a1e72ae.js.map",
+  "runtime.js": "/static/js/runtime.9a1e72ae.js",
+  "vendors/.gitkeep": "/static/vendors/.gitkeep",
+  "vendors/images/.gitkeep": "/static/vendors/images/.gitkeep",
+  "vendors/images/sample.jpg": "/static/vendors/images/sample.jpg",
+  "vendors/images/webpack.png": "/static/vendors/images/webpack.png"
+}
