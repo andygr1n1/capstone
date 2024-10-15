@@ -1,6 +1,7 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+@import 'https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap';
 
 @layer base {
     h1 {
@@ -22,9 +23,23 @@
     a {
         @apply text-blue-500 hover:text-blue-700;
     }
+
+    #root {
+        @apply min-h-[calc(100vh-165px)];
+    }
+
+    #footer {
+        @apply p-5;
+    }
 }
 
 @layer utilities {
+    .kaushan-script-regular {
+        font-family: 'Kaushan Script', cursive;
+        font-weight: 400;
+        font-style: normal;
+    }
+
     .absolute-center {
         @apply absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2;
     }
