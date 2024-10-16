@@ -6,7 +6,7 @@ export const Footer = () => {
         <div className="flex justify-between w-full h-full items-center">
             <Clock />
 
-            <div className="text-sm w-fit h-full text-gray-500">created by andygr1n1 for Harvard university</div>
+            <div className="text-sm w-fit h-full text-gray-500">by andygr1n1 for Harvard university</div>
         </div>
     )
 }
