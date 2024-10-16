@@ -1,0 +1,7 @@
+1. initialized app with https://python-webpack-boilerplate.readthedocs.io/en/latest/
+2. created django project and app
+
+-   pip freeze > requirements.txt
+-   source myenv/bin/activate
+-   python manage.py collectstatic
+-   python manage.py runserver
