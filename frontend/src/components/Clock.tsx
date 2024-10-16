@@ -11,5 +11,5 @@ export const Clock = () => {
         return () => clearInterval(timer)
     }, [])
 
-    return <div>{time.toLocaleTimeString()}</div>
+    return <div className="text-sm text-gray-500">{time.toLocaleTimeString()}</div>
 }

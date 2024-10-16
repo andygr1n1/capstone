@@ -70,7 +70,7 @@ tsconfig.json is the configuration file for the typescript compiler.
 
 These files are needed for the tailwindcss to work.
 
-### frontend folder
+### frontend folder ( > src)
 
 frontend folder contains the front-end part of the application.
 
