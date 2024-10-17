@@ -1,0 +1,52 @@
+2024-10-17 20:25:20,449 CRIT Supervisor is running as root.  Privileges were not dropped because no user is specified in the config file.  If you intend to run as root, you can set user=root in the config file to avoid this message.
+2024-10-17 20:25:20,450 INFO supervisord started with pid 1
+2024-10-17 20:25:21,453 INFO spawned: 'frontend' with pid 7
+2024-10-17 20:25:21,456 INFO spawned: 'gunicorn' with pid 8
+2024-10-17 20:25:22,440 WARN exited: frontend (exit status 2; not expected)
+2024-10-17 20:25:23,445 INFO spawned: 'frontend' with pid 40
+2024-10-17 20:25:23,446 INFO success: gunicorn entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2024-10-17 20:25:24,343 WARN exited: frontend (exit status 2; not expected)
+2024-10-17 20:25:26,356 INFO spawned: 'frontend' with pid 71
+2024-10-17 20:25:26,844 WARN exited: frontend (exit status 2; not expected)
+2024-10-17 20:25:29,859 INFO spawned: 'frontend' with pid 102
+2024-10-17 20:25:30,343 WARN exited: frontend (exit status 2; not expected)
+2024-10-17 20:25:31,348 INFO gave up: frontend entered FATAL state, too many start retries too quickly
+2024-10-17 20:26:23,540 WARN received SIGTERM indicating exit request
+2024-10-17 20:26:23,542 INFO waiting for gunicorn to die
+2024-10-17 20:26:23,659 INFO stopped: gunicorn (exit status 0)
+2024-10-17 20:26:32,716 CRIT Supervisor is running as root.  Privileges were not dropped because no user is specified in the config file.  If you intend to run as root, you can set user=root in the config file to avoid this message.
+2024-10-17 20:26:32,718 INFO supervisord started with pid 1
+2024-10-17 20:26:33,720 INFO spawned: 'frontend' with pid 7
+2024-10-17 20:26:33,724 INFO spawned: 'gunicorn' with pid 8
+2024-10-17 20:26:35,114 INFO success: frontend entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2024-10-17 20:26:35,114 INFO success: gunicorn entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2024-10-17 20:27:12,618 WARN received SIGTERM indicating exit request
+2024-10-17 20:27:12,618 INFO waiting for frontend, gunicorn to die
+2024-10-17 20:27:12,733 INFO stopped: gunicorn (exit status 0)
+2024-10-17 20:27:13,741 WARN stopped: frontend (terminated by SIGTERM)
+2024-10-17 20:27:14,152 CRIT Supervisor is running as root.  Privileges were not dropped because no user is specified in the config file.  If you intend to run as root, you can set user=root in the config file to avoid this message.
+2024-10-17 20:27:14,154 INFO supervisord started with pid 1
+2024-10-17 20:27:15,161 INFO spawned: 'frontend' with pid 6
+2024-10-17 20:27:15,162 INFO spawned: 'gunicorn' with pid 7
+2024-10-17 20:27:16,421 INFO success: frontend entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2024-10-17 20:27:16,422 INFO success: gunicorn entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2024-10-17 20:28:11,317 WARN received SIGTERM indicating exit request
+2024-10-17 20:28:11,318 INFO waiting for frontend, gunicorn to die
+2024-10-17 20:28:11,436 INFO stopped: gunicorn (exit status 0)
+2024-10-17 20:28:12,439 WARN stopped: frontend (terminated by SIGTERM)
+2024-10-17 20:29:22,390 CRIT Supervisor is running as root.  Privileges were not dropped because no user is specified in the config file.  If you intend to run as root, you can set user=root in the config file to avoid this message.
+2024-10-17 20:29:22,391 INFO supervisord started with pid 1
+2024-10-17 20:29:23,398 INFO spawned: 'frontend' with pid 6
+2024-10-17 20:29:23,401 INFO spawned: 'gunicorn' with pid 7
+2024-10-17 20:29:24,501 INFO success: frontend entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2024-10-17 20:29:24,501 INFO success: gunicorn entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2024-10-17 20:30:53,849 WARN received SIGTERM indicating exit request
+2024-10-17 20:30:53,852 INFO waiting for frontend, gunicorn to die
+2024-10-17 20:30:53,973 INFO stopped: gunicorn (exit status 0)
+2024-10-17 20:30:54,976 WARN stopped: frontend (terminated by SIGTERM)
+2024-10-17 20:31:30,602 CRIT Supervisor is running as root.  Privileges were not dropped because no user is specified in the config file.  If you intend to run as root, you can set user=root in the config file to avoid this message.
+2024-10-17 20:31:30,603 INFO supervisord started with pid 1
+2024-10-17 20:31:31,612 INFO spawned: 'frontend' with pid 7
+2024-10-17 20:31:31,615 INFO spawned: 'gunicorn' with pid 8
+2024-10-17 20:31:32,730 INFO success: frontend entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2024-10-17 20:31:32,730 INFO success: gunicorn entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
