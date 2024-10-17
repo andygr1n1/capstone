@@ -2,12 +2,29 @@ version: '3.8'
 
 services:
   web:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     command: gunicorn --bind 0.0.0.0:8000 capstone.wsgi:application
     volumes:
       - .:/app
     expose:
       - "8000"
+    depends_on:
+      - frontend
+    networks:
+      - capstone_network
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    ports:
+      - "9091:9091"
+    volumes:
+      - ./frontend:/app/frontend
+    networks:
+      - capstone_network
 
   nginx:
     image: nginx:latest
@@ -18,3 +35,10 @@ services:
       - ./staticfiles:/app/staticfiles
     depends_on:
       - web
+      - frontend
+    networks:
+      - capstone_network
+
+networks:
+  capstone_network:
+    driver: bridge

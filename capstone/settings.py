@@ -25,7 +25,7 @@ print("BASE_DIR:", BASE_DIR)
 SECRET_KEY = 'django-insecure--dm@+d(p=01)mpxvui&3w8zmhr)5_uvikj)$pq(iw2eu&3ht9('
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*','localhost','127.0.0.1']
 
@@ -33,6 +33,7 @@ ALLOWED_HOSTS = ['*','localhost','127.0.0.1']
 # Application definition
 
 INSTALLED_APPS = [
+    'crystal_mind',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

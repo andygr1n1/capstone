@@ -1,8 +1,9 @@
 {
-    "name": "python-webpack-boilerplate",
+    "name": "capstone-project",
     "version": "1.0.3",
-    "description": "Webpack boilerplate for Django & Flask",
+    "description": "",
     "scripts": {
+        "build-docker": "cross-env NODE_ENV=production webpack --config webpack/webpack.config.prod.js",
         "build": "cross-env NODE_ENV=production webpack --config frontend/webpack/webpack.config.prod.js",
         "start": "webpack serve --config frontend/webpack/webpack.config.dev.js",
         "watch": "webpack --watch --config frontend/webpack/webpack.config.watch.js",
@@ -10,18 +11,13 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/AccordBox/python-webpack-boilerplate"
+        "url": ""
     },
     "keywords": [
-        "webpack",
-        "startkit",
         "frontend"
     ],
-    "author": "Michael Yin",
+    "author": "andygr1n1",
     "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/AccordBox/python-webpack-boilerplate/issues"
-    },
     "devDependencies": {
         "@babel/core": "^7.20.5",
         "@babel/eslint-parser": "^7.19.1",
