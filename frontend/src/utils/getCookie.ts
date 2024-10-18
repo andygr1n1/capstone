@@ -14,4 +14,4 @@ export const getCookie = (name: string) => {
     return cookieValue
 }
 
-export const getCsrftoken = () => getCookie('csrftoken') || ''
+// export const getCsrftoken = () => getCookie('csrftoken') || ''

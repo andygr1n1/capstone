@@ -17,4 +17,5 @@ def jsonuser(request):
     return {
         'jsonuser': json.dumps(user_data),
         'appIsAuthenticated': json.dumps(request.user.is_authenticated),
+        'appCsrftoken': request.COOKIES.get('csrftoken', ''),
     }

@@ -8,7 +8,7 @@ const projectPaths = [
 ]
 
 const contentPaths = [...projectPaths]
-console.log(`tailwindcss will scan ${contentPaths}`)
+// console.info(`tailwindcss will scan ${contentPaths}`)
 
 module.exports = {
     content: contentPaths,

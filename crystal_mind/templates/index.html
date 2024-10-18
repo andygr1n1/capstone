@@ -2,6 +2,7 @@
 
 {% block body %}
 {% if user.is_authenticated %}
+{% csrf_token %}
 <div class="root relative" id="authenticated-login"></div>
 {% else %}
 <div class="root relative" id="anonymous-login"></div>

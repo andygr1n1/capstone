@@ -4,6 +4,7 @@ declare module '*.png' {
 }
 
 declare const isAuthenticated: boolean
+declare const appCsrftoken: string
 
 declare const appUser: {
     username: string

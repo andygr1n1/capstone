@@ -1,6 +1,5 @@
 import React from 'react'
 import { Button } from 'antd'
-import { getCsrftoken } from '../utils/getCookie'
 
 export const LogOutButton = () => {
     const onClick = () => {
@@ -8,7 +7,7 @@ export const LogOutButton = () => {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'X-CSRFToken': getCsrftoken(),
+                'X-CSRFToken': appCsrftoken,
             },
         }).then(response => {
             if (response.ok) {

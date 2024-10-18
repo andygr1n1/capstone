@@ -18,7 +18,6 @@ const topbarRoot = document.getElementById('topbar')
 if (topbarRoot) {
     const topbarRootElement = createRoot(topbarRoot)
     topbarRootElement.render(<Topbar />)
-    // console.log('topbarRoot', topbarRoot)
 }
 
 const footerRoot = document.getElementById('footer')

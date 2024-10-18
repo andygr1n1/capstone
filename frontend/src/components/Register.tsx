@@ -1,6 +1,5 @@
 import React from 'react'
 import { Form, Input, Button, Typography, message } from 'antd'
-import { getCsrftoken } from '../utils/getCookie'
 
 const { Title } = Typography
 
@@ -11,7 +10,7 @@ export const Register = () => {
             body: JSON.stringify(values),
             headers: {
                 'Content-Type': 'application/json',
-                'X-CSRFToken': getCsrftoken(),
+                'X-CSRFToken': appCsrftoken,
             },
         })
             .then(response => {
