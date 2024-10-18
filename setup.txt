@@ -5,3 +5,10 @@
 -   source myenv/bin/activate
 -   python manage.py collectstatic
 -   python manage.py runserver
+
+
+python manage.py makemigrations crystal_mind
+python manage.py migrate
+
+create superuser
+python manage.py createsuperuser

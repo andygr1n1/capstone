@@ -25,7 +25,7 @@ print("BASE_DIR:", BASE_DIR)
 SECRET_KEY = 'django-insecure--dm@+d(p=01)mpxvui&3w8zmhr)5_uvikj)$pq(iw2eu&3ht9('
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*','localhost','127.0.0.1']
 
@@ -58,7 +58,7 @@ ROOT_URLCONF = 'capstone.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / "capstone/templates"],
+        'DIRS': [BASE_DIR / "capstone/templates", BASE_DIR / "crystal_mind/templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -66,6 +66,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'crystal_mind.utils.context_processors.jsonuser',
             ],
         },
     },
@@ -83,6 +84,8 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+AUTH_USER_MODEL = 'crystal_mind.User'
 
 
 # Password validation

@@ -12,11 +12,21 @@
 
 </head>
 
+<!-- block body -->
+
 <body>
     <div id="topbar"></div>
-    <!-- <div id="root"></div> -->
-    <div class="root relative" id="anonymous-login"></div>
+    {% block body %}
+    {% endblock %}
     <div id="footer"></div>
 </body>
 
+
 </html>
+
+{% block script %}
+<script defer>
+    const isAuthenticated = JSON.parse('{{ appIsAuthenticated|escapejs|safe }}');
+    const appUser = JSON.parse('{{ jsonuser|escapejs|safe }}');
+</script>
+{% endblock %}

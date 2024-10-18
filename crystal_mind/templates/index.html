@@ -1,1 +1,9 @@
 {% extends 'layout.html' %}
+
+{% block body %}
+{% if user.is_authenticated %}
+<div class="root relative" id="authenticated-login"></div>
+{% else %}
+<div class="root relative" id="anonymous-login"></div>
+{% endif %}
+{% endblock %}

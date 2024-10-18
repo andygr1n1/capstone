@@ -30,7 +30,7 @@
     }
 
     .root {
-        @apply min-h-[calc(100vh-240px)] md:min-h-[calc(100vh-165px)];
+        @apply min-h-[calc(100vh-240px)] md:min-h-[calc(100vh-165px)] flex items-center justify-center;
     }
 
     #footer {

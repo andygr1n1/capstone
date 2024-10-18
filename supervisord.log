@@ -342,3 +342,22 @@
 2024-10-18 15:59:39,847 INFO success: gunicorn entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
 2024-10-18 15:59:41,374 INFO success: collectstatic entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
 2024-10-18 15:59:41,409 INFO exited: collectstatic (exit status 0; expected)
+2024-10-18 16:02:31,174 WARN received SIGTERM indicating exit request
+2024-10-18 16:02:31,175 INFO waiting for frontend, gunicorn to die
+2024-10-18 16:02:31,289 INFO stopped: gunicorn (exit status 0)
+2024-10-18 16:02:32,294 WARN stopped: frontend (terminated by SIGTERM)
+2024-10-18 16:05:52,590 CRIT Supervisor is running as root.  Privileges were not dropped because no user is specified in the config file.  If you intend to run as root, you can set user=root in the config file to avoid this message.
+2024-10-18 16:05:52,593 INFO supervisord started with pid 1
+2024-10-18 16:05:53,602 INFO spawned: 'collectstatic' with pid 6
+2024-10-18 16:05:53,605 INFO spawned: 'frontend' with pid 7
+2024-10-18 16:05:53,608 INFO spawned: 'gunicorn' with pid 8
+2024-10-18 16:05:54,189 WARN exited: collectstatic (exit status 0; not expected)
+2024-10-18 16:05:55,203 INFO spawned: 'collectstatic' with pid 34
+2024-10-18 16:05:55,220 INFO success: frontend entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2024-10-18 16:05:55,275 INFO success: gunicorn entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2024-10-18 16:05:56,311 INFO success: collectstatic entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2024-10-18 16:05:57,217 INFO exited: collectstatic (exit status 0; expected)
+2024-10-18 16:08:10,802 WARN received SIGTERM indicating exit request
+2024-10-18 16:08:10,804 INFO waiting for frontend, gunicorn to die
+2024-10-18 16:08:10,922 INFO stopped: gunicorn (exit status 0)
+2024-10-18 16:08:11,929 WARN stopped: frontend (terminated by SIGTERM)

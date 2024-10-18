@@ -1,65 +1,58 @@
+import json
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
-from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
+from django.shortcuts import redirect, render
 from django.urls import reverse
-from django.db.models import Q
-
+from .models import User
 
 def index(request):
-    return render(request, "crystal_mind/index.html")
+    return render(request, "index.html")
 
 
-# def login_view(request):
-#     if request.method == "POST":
+def login_view(request):
+    if request.method == "POST":
+        form = json.loads(request.body)
+        username = form["username"]
+        password = form["password"]
+        user = authenticate(request, username=username, password=password)
 
-#         # Attempt to sign user in
-#         username = request.POST["username"]
-#         password = request.POST["password"]
-#         user = authenticate(request, username=username, password=password)
-
-#         # Check if authentication successful
-#         if user is not None:
-#             login(request, user)
-#             return HttpResponseRedirect(reverse("index"))
-#         else:
-#             return render(request, "crystal_mind/login.html", {
-#                 "message": "Invalid username and/or password."
-#             })
-#     else:
-#         return render(request, "crystal_mind/login.html")
+        # Check if authentication successful
+        if user is not None:
+            login(request, user)
+            return JsonResponse({"status": "success"})
+        else:
+            return JsonResponse({"status": "error", "message": "Invalid username and/or password."})
+    else:
+        return render(request, "login.html")
 
 
-# def logout_view(request):
-#     logout(request)
-#     return HttpResponseRedirect(reverse("index"))
+def logout_view(request):
+    logout(request)
+    return JsonResponse({"status": "success"})
 
 
-# def register(request):
-#     if request.method == "POST":
-#         username = request.POST["username"]
-#         email = request.POST["email"]
+def register(request):
+    if request.method == "POST":
+        form = json.loads(request.body)
+        username = form["username"]
+        email = form["email"]
+        password = form["password"]
+        confirmation = form["confirmation"]
+        
+        if password != confirmation:
+            return JsonResponse({"status": "error", "message": "Passwords must match."})
 
-#         # Ensure password matches confirmation
-#         password = request.POST["password"]
-#         confirmation = request.POST["confirmation"]
-#         if password != confirmation:
-#             return render(request, "crystal_mind/register.html", {
-#                 "message": "Passwords must match."
-#             })
-
-#         # Attempt to create new user
-#         try:
-#             user = User.objects.create_user(username, email, password)
-#             user.save()
-#         except IntegrityError:
-#             return render(request, "crystal_mind/register.html", {
-#                 "message": "Username already taken."
-#             })
-#         login(request, user)
-#         return HttpResponseRedirect(reverse("index"))
-#     else:
-#         return render(request, "crystal_mind/register.html")
+        # Attempt to create new user
+        try:
+            user = User.objects.create_user(username, email, password)
+            user.save()
+        except IntegrityError:
+            return JsonResponse({"status": "error", "message": "Name or email already taken."})
+        login(request, user)
+        return JsonResponse({"status": "success"}) 
+    else:
+        return render(request, "register.html")
 
 # def closed_listings(request):
 #     listings = AuctionListing.objects.filter(is_active=False)
