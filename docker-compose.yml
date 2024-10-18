@@ -9,9 +9,7 @@ services:
       - .:/app
     expose:
       - "8000"
-    ports:
-      - "9091:9091"
-      - "8000:8000"
+      - "9091"
     networks:
       - capstone_network
   nginx:

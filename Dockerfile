@@ -1,5 +1,5 @@
 # Use the official Python image
-FROM python:3.10
+FROM python:3.12
 
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
@@ -15,28 +15,23 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the project files
 COPY . /app/
 
-# Collect static files
-RUN python manage.py collectstatic --noinput
 
-# Install Node.js and npm
+
 RUN curl -fsSL https://deb.nodesource.com/setup_20.x -o nodesource_setup.sh
 RUN bash nodesource_setup.sh
 RUN apt-get install -y nodejs
+RUN apt-get update && apt-get install -y supervisor
+RUN npm install -g serve
 
-# Install npm
 RUN npm install
 
-# Build the frontend
 RUN npm run build
+RUN rm -rf staticfiles
 
-# Install supervisord
-RUN apt-get update && apt-get install -y supervisor
-
-# Copy the supervisor configuration file
 COPY ./supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
-# Expose the required ports
 EXPOSE 8000 9091
 
-# Start the supervisor process to run both backend and frontend
 CMD ["supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
+
+
