@@ -8,6 +8,8 @@ import { AnonymousLogin } from '../components/AnonymousLogin'
 import { Register } from '../components/Register'
 import { AuthenticatedLogin } from '../components/AuthenticatedLogin'
 import { Login } from '../components/Login'
+import { Tasks } from '../modules/tasks/Tasks'
+import { BrowserRouter } from 'react-router-dom'
 
 const root = document.getElementById('root')
 if (root) {
@@ -17,7 +19,11 @@ if (root) {
 const topbarRoot = document.getElementById('topbar')
 if (topbarRoot) {
     const topbarRootElement = createRoot(topbarRoot)
-    topbarRootElement.render(<Topbar />)
+    topbarRootElement.render(
+        <BrowserRouter>
+            <Topbar />
+        </BrowserRouter>
+    )
 }
 
 const footerRoot = document.getElementById('footer')
@@ -48,4 +54,10 @@ const loginRoot = document.getElementById('login')
 if (loginRoot) {
     const loginRootElement = createRoot(loginRoot)
     loginRootElement.render(<Login />)
+}
+
+const tasksRoot = document.getElementById('tasks')
+if (tasksRoot) {
+    const tasksRootElement = createRoot(tasksRoot)
+    tasksRootElement.render(<Tasks />)
 }

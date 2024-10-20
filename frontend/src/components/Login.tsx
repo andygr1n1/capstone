@@ -37,8 +37,8 @@ export const Login = () => {
     }
 
     return (
-        <div className="flex justify-center w-full max-w-xl items-center h-full">
-            <div className="bg-white p-10 rounded-md shadow-md w-full max-w-md">
+        <div className="flex justify-center w-full items-center">
+            <div className="lg:bg-white p-10 lg:rounded-md lg:shadow-md w-full max-w-md">
                 <Title className="font-kaushan text-center">Login</Title>
                 <Form name="login" onFinish={onFinish}>
                     <Form.Item name="username" rules={[{ required: true, message: 'Please input your Username!' }]}>

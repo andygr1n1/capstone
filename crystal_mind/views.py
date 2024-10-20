@@ -53,6 +53,10 @@ def register(request):
         return JsonResponse({"status": "success"}) 
     else:
         return render(request, "register.html")
+    
+
+def tasks(request):
+    return render(request, "tasks.html")
 
 # def closed_listings(request):
 #     listings = AuctionListing.objects.filter(is_active=False)
