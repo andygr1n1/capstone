@@ -29,5 +29,6 @@
     const isAuthenticated = JSON.parse('{{ appIsAuthenticated|escapejs|safe }}');
     const appUser = JSON.parse('{{ jsonuser|escapejs|safe }}');
     const appCsrftoken = '{{ appCsrftoken|escapejs|safe }}';
+    console.log('->.', isAuthenticated);
 </script>
 {% endblock %}

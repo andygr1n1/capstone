@@ -5,7 +5,8 @@ from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from .models import User
-
+from django.db.models import Q
+from .helpers import makeTasks
 def index(request):
     return render(request, "index.html")
 
@@ -55,8 +56,9 @@ def register(request):
         return render(request, "register.html")
     
 
-def tasks(request):
-    return render(request, "tasks.html")
+def tasks(request, page=1):
+    tasks = makeTasks(request, page)
+    return render(request, "tasks.html", {"tasks": tasks["json"], "num_pages": tasks["num_pages"], "current_page": tasks["current_page"]})
 
 # def closed_listings(request):
 #     listings = AuctionListing.objects.filter(is_active=False)

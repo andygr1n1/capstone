@@ -10,3 +10,14 @@ declare const appUser: {
     username: string
     email: string
 }
+
+declare const tasks: {
+    id: number
+    title: string
+    description: string
+    location: string
+    deadline: string
+    created_at: string
+    is_author: boolean
+    finished_at: string | null
+}[]
