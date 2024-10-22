@@ -21,3 +21,8 @@ declare const tasks: {
     is_author: boolean
     finished_at: string | null
 }[]
+
+declare const users: {
+    id: number
+    username: string
+}[]

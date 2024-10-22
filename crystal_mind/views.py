@@ -4,9 +4,9 @@ from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse
-from .models import User
+from .models import User, Task
 from django.db.models import Q
-from .helpers import makeTasks
+from .helpers import makeTasks, makeUsers
 def index(request):
     return render(request, "index.html")
 
@@ -58,7 +58,34 @@ def register(request):
 
 def tasks(request, page=1):
     tasks = makeTasks(request, page)
-    return render(request, "tasks.html", {"tasks": tasks["json"], "num_pages": tasks["num_pages"], "current_page": tasks["current_page"]})
+    users = makeUsers(request) 
+    return render(request, "tasks.html", {"tasks_json": tasks["json"], "num_pages": tasks["num_pages"], "current_page": tasks["current_page"], "users_json": users["json"]})
+
+
+
+# js
+def createTask(request):
+    if request.method == "POST":
+        form = json.loads(request.body)
+        print(form)
+        task = Task(
+            title=form["title"],
+            description=form["description"],
+            location=form["location"],
+            deadline=form["deadline"],
+            created_by=request.user
+        )
+        task.save()
+        
+        if "users" in form:
+            task.users.set(form["users"])
+
+        return JsonResponse({"status": "success"})
+    else:
+        return JsonResponse({"status": "error", "message": "Invalid request method."})
+
+def tasksSubscription(request):
+    pass
 
 # def closed_listings(request):
 #     listings = AuctionListing.objects.filter(is_active=False)

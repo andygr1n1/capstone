@@ -7,7 +7,6 @@ import { format } from 'date-fns'
 const { Text } = Typography
 
 export const Task: React.FC<{ task: ITask }> = ({ task }) => {
-    console.log(task.is_author)
     return (
         <Card title={task.title} className="task-card">
             <div className="flex w-full justify-between">

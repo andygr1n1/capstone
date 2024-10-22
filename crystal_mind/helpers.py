@@ -1,5 +1,5 @@
 import json
-from .models import Task
+from .models import Task, User
 from django.core.paginator import Paginator
 from django.db.models import Q
 
@@ -30,4 +30,14 @@ def makeTasks(request, page):
         "tasks": tasks_data,
         'num_pages': paginator.num_pages,
         'current_page': page_obj.number
+    }
+
+def makeUsers(request):
+    users = User.objects.exclude(id=request.user.id)
+    users_data = []
+    for user in users:
+        users_data.append({"id": user.id, "username": user.username})
+    return {
+        "users": users_data,
+        "json": json.dumps(users_data)
     }

@@ -7,4 +7,6 @@ urlpatterns = [
     path("logout/", views.logout_view, name="logout"),
     path("login/", views.login_view, name="login"),
     path("tasks/", views.tasks, name="tasks"),
+    # js
+    path("createTask", views.createTask, name="createTask"),
 ]

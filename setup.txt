@@ -12,3 +12,11 @@ python manage.py migrate
 
 create superuser
 python manage.py createsuperuser
+
+
+#TODO
+- finish create new task
+- toggle complete task
+- subscription
+- notifications to email on creating a task for related users
+- pagination (5 per page)
