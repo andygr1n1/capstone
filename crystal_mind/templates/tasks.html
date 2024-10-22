@@ -9,8 +9,8 @@
 <script defer>
     const users = JSON.parse('{{ users_json|escapejs|safe }}');
     let tasks = JSON.parse('{{ tasks_json|escapejs|safe }}');
-    let num_pages = JSON.parse('{{ num_pages|escapejs|safe }}');
-    let current_page = JSON.parse('{{ current_page|escapejs|safe }}');
+    let tasks_num_pages = JSON.parse('{{ num_pages|escapejs|safe }}');
+    let tasks_current_page = JSON.parse('{{ current_page|escapejs|safe }}');
 </script>
 {% endif %}
 {% endblock %}

@@ -39,6 +39,7 @@ CSRF_COOKIE_SECURE = False
 # Application definition
 
 INSTALLED_APPS = [
+    'channels',
     'crystal_mind',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -78,6 +79,14 @@ TEMPLATES = [
     },
 ]
 
+""" websocket """
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer",
+    },
+}
+ASGI_APPLICATION = "capstone.asgi.application"
+"""  """
 WSGI_APPLICATION = 'capstone.wsgi.application'
 
 

@@ -13,14 +13,13 @@ export const CreateNewTask = () => {
     const handleOk = async () => {
         form.validateFields()
             .then(async values => {
-                console.log('Received values of form: ', values)
                 const res = await fetch('/createTask', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                         'X-CSRFToken': appCsrftoken,
                     },
-                    body: JSON.stringify(values),
+                    body: JSON.stringify({ ...values, current_page: tasks_current_page }),
                 })
                 if (res.ok) {
                     setIsModalOpen(false)

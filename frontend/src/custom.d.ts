@@ -3,15 +3,16 @@ declare module '*.png' {
     export default value
 }
 
-declare const isAuthenticated: boolean
-declare const appCsrftoken: string
+declare let isAuthenticated: boolean
+declare let appCsrftoken: string
 
-declare const appUser: {
+declare let appUser: {
+    id: number
     username: string
     email: string
 }
 
-declare const tasks: {
+declare let tasks: {
     id: number
     title: string
     description: string
@@ -21,6 +22,9 @@ declare const tasks: {
     is_author: boolean
     finished_at: string | null
 }[]
+
+declare let tasks_num_pages: number
+declare let tasks_current_page: number
 
 declare const users: {
     id: number

@@ -1,10 +1,15 @@
-1. initialized app with https://python-webpack-boilerplate.readthedocs.io/en/latest/
+https://python-webpack-boilerplate.readthedocs.io/en/latest/setup_with_django/
+
+1. initialized app with https://python-webpack-boilerplate.readthedocs.io/en/latest/ 
 2. created django project and app
 
--   pip freeze > requirements.txt
 -   source myenv/bin/activate
+-   pip freeze > requirements.txt
+-   pip install --no-cache-dir -r requirements.txt
+-   pip install "uvicorn[standard]"
 -   python manage.py collectstatic
--   python manage.py runserver
+-   python manage.py runserver (for http requests)
+-   uvicorn capstone.asgi:application --host 127.0.0.1 --port 8000 (for websockets)
 
 
 python manage.py makemigrations crystal_mind
@@ -14,9 +19,11 @@ create superuser
 python manage.py createsuperuser
 
 
-#TODO
-- finish create new task
+
+
+
 - toggle complete task
-- subscription
 - notifications to email on creating a task for related users
-- pagination (5 per page)
+- finish create new task
+
+

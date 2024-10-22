@@ -7,6 +7,10 @@ from django.urls import reverse
 from .models import User, Task
 from django.db.models import Q
 from .helpers import makeTasks, makeUsers
+from channels.layers import get_channel_layer
+from asgiref.sync import async_to_sync
+from django.contrib.auth.decorators import login_required
+
 def index(request):
     return render(request, "index.html")
 
@@ -57,21 +61,32 @@ def register(request):
     
 
 def tasks(request, page=1):
+    if not request.user.is_authenticated:
+        return redirect('index')
     tasks = makeTasks(request, page)
+    print('HERE!!!!!')
     users = makeUsers(request) 
     return render(request, "tasks.html", {"tasks_json": tasks["json"], "num_pages": tasks["num_pages"], "current_page": tasks["current_page"], "users_json": users["json"]})
 
 
 
 # js
+def selectedTasks(request, page):
+    tasks = makeTasks(request, page)
+    return JsonResponse({
+        "tasks":tasks['json'],
+        "num_pages": tasks["num_pages"],
+        "current_page": tasks["current_page"]
+    })
+
 def createTask(request):
+    print('createTask',request.user, request)
     if request.method == "POST":
         form = json.loads(request.body)
-        print(form)
         task = Task(
             title=form["title"],
             description=form["description"],
-            location=form["location"],
+            location=form.get("location"), 
             deadline=form["deadline"],
             created_by=request.user
         )
@@ -79,6 +94,18 @@ def createTask(request):
         
         if "users" in form:
             task.users.set(form["users"])
+        
+        related_users = [request.user.id] + form["users"] if "users" in form else [request.user.id]
+        print('related_users IN VIEW', related_users)
+        # Notify WebSocket group
+        channel_layer = get_channel_layer()
+        async_to_sync(channel_layer.group_send)(
+            "tasks",
+            {
+                "type": "tasks_refresh",
+                "related_users": json.dumps(related_users)
+            }
+        )
 
         return JsonResponse({"status": "success"})
     else:

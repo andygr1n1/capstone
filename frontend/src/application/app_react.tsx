@@ -56,8 +56,12 @@ if (loginRoot) {
     loginRootElement.render(<Login />)
 }
 
+/*  */
 const tasksRoot = document.getElementById('tasks')
-if (tasksRoot) {
-    const tasksRootElement = createRoot(tasksRoot)
-    tasksRootElement.render(<Tasks />)
+export const tasksRootElement = tasksRoot ? createRoot(tasksRoot) : null
+
+export const renderTasksRoot = () => {
+    tasksRootElement?.render(<Tasks />)
 }
+
+renderTasksRoot()

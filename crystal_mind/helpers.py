@@ -5,8 +5,9 @@ from django.db.models import Q
 
 def makeTasks(request, page):
     tasks = Task.objects.filter(Q(users__id=request.user.id) | Q(created_by=request.user)).distinct()
+    print('tasks', tasks)
     tasks = tasks.order_by('-created_at')
-    paginator = Paginator(tasks, 10) 
+    paginator = Paginator(tasks, 5) 
     page_number = request.GET.get('page', page)
     page_obj = paginator.get_page(page_number)
     tasks_data = []

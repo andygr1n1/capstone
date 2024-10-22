@@ -9,4 +9,5 @@ urlpatterns = [
     path("tasks/", views.tasks, name="tasks"),
     # js
     path("createTask", views.createTask, name="createTask"),
+    path("selectedTasks/<int:page>", views.selectedTasks, name="selectedTasks"),
 ]

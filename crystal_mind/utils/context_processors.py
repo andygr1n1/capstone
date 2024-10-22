@@ -1,3 +1,4 @@
+from django.middleware.csrf import get_token
 import json
 
 
@@ -7,6 +8,7 @@ def jsonuser(request):
     """
     if request.user.is_authenticated:
         user_data = {
+            'id': request.user.id,
             'username': request.user.username,
             'email': request.user.email,
             # Add more fields as needed
@@ -14,8 +16,11 @@ def jsonuser(request):
     else:
         user_data = None
 
+    csrftoken = get_token(request)
+    print('csrftoken', csrftoken)
+
     return {
         'jsonuser': json.dumps(user_data),
         'appIsAuthenticated': json.dumps(request.user.is_authenticated),
-        'appCsrftoken': request.COOKIES.get('csrftoken', ''),
+        'appCsrftoken': csrftoken,
     }
