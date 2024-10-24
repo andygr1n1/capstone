@@ -10,12 +10,11 @@ export const ToggleCompleteTask: React.FC<{ task: ITask }> = ({ task }) => {
     const handleToggle = async (e: CheckboxChangeEvent) => {
         const isChecked = e.target.checked
         if (isChecked) {
-            // await toggleCompleteTask(task.id)
             setFinishedAt(new Date().toISOString())
         } else {
             setFinishedAt(null)
         }
-            await toggleCompleteTask(task.id, finishedAt)
+        await toggleCompleteTask(task.id, finishedAt)
     }
 
     return (

@@ -22,8 +22,6 @@ python manage.py createsuperuser
 
 
 
-- notifications to email on creating a task for related users
-- finish create new task
 - search tasks by title
 - filter menu for active, completed and expired tasks
 - view detailed task (deadline, creation date, assigned users)

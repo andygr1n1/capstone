@@ -4,6 +4,7 @@ const { Option } = Select
 
 export const CreateNewTask = () => {
     const [isModalOpen, setIsModalOpen] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
     const [form] = Form.useForm()
 
     const showModal = () => {
@@ -11,6 +12,7 @@ export const CreateNewTask = () => {
     }
 
     const handleOk = async () => {
+        setIsLoading(true)
         form.validateFields()
             .then(async values => {
                 const res = await fetch('/createTask', {
@@ -31,6 +33,9 @@ export const CreateNewTask = () => {
             .catch(info => {
                 console.log('Validate Failed:', info)
             })
+            .finally(() => {
+                setIsLoading(false)
+            })
     }
 
     const handleCancel = () => {
@@ -42,7 +47,13 @@ export const CreateNewTask = () => {
             <Button className="w-full" size="large" type="primary" onClick={showModal}>
                 New task
             </Button>
-            <Modal title="Create new task" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+            <Modal
+                loading={isLoading}
+                title="Create new task"
+                open={isModalOpen}
+                onOk={handleOk}
+                onCancel={handleCancel}
+            >
                 <Form form={form} layout="vertical" name="create_task">
                     <Form.Item
                         name="title"

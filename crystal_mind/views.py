@@ -11,6 +11,7 @@ from .helpers import makeTasks, makeUsers
 from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
 from django.contrib.auth.decorators import login_required
+from .helpers import sendTaskNotificationEmail
 
 def index(request):
     return render(request, "index.html")
@@ -104,6 +105,15 @@ def createTask(request):
                 "related_users": json.dumps(related_users)
             }
         )
+
+        # send email to related users
+        if "users" in form:
+            recipient_emails = [user.email for user in task.users.all() if user.email]
+            sendTaskNotificationEmail(
+                subject="New Task Created",
+                message=f"A new task '{task.title}' has been created.",
+                recipient_list=recipient_emails
+            )
 
         return JsonResponse({"status": "success"})
     else:

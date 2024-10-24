@@ -2,6 +2,8 @@ import json
 from .models import Task, User
 from django.core.paginator import Paginator
 from django.db.models import Q
+from django.core.mail import send_mail
+from django.conf import settings
 
 def makeTasks(request, page):
     tasks = Task.objects.filter(Q(users__id=request.user.id) | Q(created_by=request.user)).distinct()
@@ -42,3 +44,12 @@ def makeUsers(request):
         "users": users_data,
         "json": json.dumps(users_data)
     }
+
+def sendTaskNotificationEmail(subject, message, recipient_list):
+    send_mail(
+        subject,
+        message,
+        settings.EMAIL_HOST_USER,
+        recipient_list,
+        fail_silently=False,
+    )
