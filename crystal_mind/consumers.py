@@ -14,7 +14,6 @@ class TaskConsumer(AsyncWebsocketConsumer):
         # Handle incoming data if needed
 
     async def tasks_refresh(self, event):
-        print('task created in consumer <<<<<<', event)
         await self.send(text_data=json.dumps({
             'type': 'tasks_refresh',
             'related_users': event['related_users']

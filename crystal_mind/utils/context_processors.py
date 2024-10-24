@@ -17,7 +17,6 @@ def jsonuser(request):
         user_data = None
 
     csrftoken = get_token(request)
-    print('csrftoken', csrftoken)
 
     return {
         'jsonuser': json.dumps(user_data),

@@ -7,7 +7,6 @@ export const TasksPagination = () => {
         tasks_current_page = page
         fetchSelectedTasks(page)
     }
-    // console.log('tasks', tasks, tasks.length, tasks_num_pages, tasks_current_page)
     return (
         <Pagination
             align="center"

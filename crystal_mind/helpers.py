@@ -5,7 +5,6 @@ from django.db.models import Q
 
 def makeTasks(request, page):
     tasks = Task.objects.filter(Q(users__id=request.user.id) | Q(created_by=request.user)).distinct()
-    print('tasks', tasks)
     tasks = tasks.order_by('-created_at')
     paginator = Paginator(tasks, 5) 
     page_number = request.GET.get('page', page)
@@ -22,6 +21,7 @@ def makeTasks(request, page):
             "created_at": task.created_at.strftime("%Y-%m-%d %H:%M:%S"),
             "deadline": task.deadline.strftime("%Y-%m-%d %H:%M:%S"),
             "location": task.location,
+            "finished_at": task.finished_at.strftime("%Y-%m-%d %H:%M:%S") if task.finished_at else None,
             "users": [{"id": user.id, "username": user.username} for user in task.users.all()],
             "messages": [{"id": message.id, "content": message.content, "created_at": message.created_at.strftime("%Y-%m-%d %H:%M:%S")} for message in task.messages.all()],
         })

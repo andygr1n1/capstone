@@ -1,3 +1,4 @@
+import datetime
 import json
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
@@ -64,7 +65,6 @@ def tasks(request, page=1):
     if not request.user.is_authenticated:
         return redirect('index')
     tasks = makeTasks(request, page)
-    print('HERE!!!!!')
     users = makeUsers(request) 
     return render(request, "tasks.html", {"tasks_json": tasks["json"], "num_pages": tasks["num_pages"], "current_page": tasks["current_page"], "users_json": users["json"]})
 
@@ -80,7 +80,6 @@ def selectedTasks(request, page):
     })
 
 def createTask(request):
-    print('createTask',request.user, request)
     if request.method == "POST":
         form = json.loads(request.body)
         task = Task(
@@ -96,7 +95,6 @@ def createTask(request):
             task.users.set(form["users"])
         
         related_users = [request.user.id] + form["users"] if "users" in form else [request.user.id]
-        print('related_users IN VIEW', related_users)
         # Notify WebSocket group
         channel_layer = get_channel_layer()
         async_to_sync(channel_layer.group_send)(
@@ -111,8 +109,20 @@ def createTask(request):
     else:
         return JsonResponse({"status": "error", "message": "Invalid request method."})
 
-def tasksSubscription(request):
-    pass
+
+
+def toggleCompleteTask(request):
+    try:
+        form = json.loads(request.body)
+        task = Task.objects.get(id=form["taskId"])
+        if task.finished_at:
+            task.finished_at = None
+        else:
+            task.finished_at = datetime.datetime.now().astimezone()
+        task.save()
+        return JsonResponse({"status": "success"})
+    except Exception as e:
+        return JsonResponse({"status": "error", "message": str(e)})
 
 # def closed_listings(request):
 #     listings = AuctionListing.objects.filter(is_active=False)

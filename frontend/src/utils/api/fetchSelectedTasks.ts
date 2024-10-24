@@ -6,7 +6,6 @@ export const fetchSelectedTasks = async (page: number) => {
             return data.json()
         })
         .then(data => {
-            console.log('data', data.tasks)
             tasks = JSON.parse(data.tasks)
             tasks_num_pages = JSON.parse(data.num_pages)
             tasks_current_page = JSON.parse(data.current_page)
