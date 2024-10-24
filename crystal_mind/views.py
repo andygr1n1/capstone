@@ -72,8 +72,8 @@ def tasks(request, page=1):
 
 
 # js
-def selectedTasks(request, page):
-    tasks = makeTasks(request, page)
+def selectedTasks(request, page, searchText='', state='all'):
+    tasks = makeTasks(request, page, searchText, state)
     return JsonResponse({
         "tasks":tasks['json'],
         "num_pages": tasks["num_pages"],

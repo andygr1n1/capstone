@@ -1,3 +1,4 @@
+import datetime
 import json
 from .models import Task, User
 from django.core.paginator import Paginator
@@ -5,8 +6,23 @@ from django.db.models import Q
 from django.core.mail import send_mail
 from django.conf import settings
 
-def makeTasks(request, page):
+def makeTasks(request, page, searchText='', state='all'):
+    if searchText == '___empty_search___':
+        searchText = ''
+
     tasks = Task.objects.filter(Q(users__id=request.user.id) | Q(created_by=request.user)).distinct()
+    if searchText:
+        tasks = tasks.filter(Q(title__icontains=searchText) | Q(description__icontains=searchText))
+
+
+    elif state == 'active':
+        tasks = tasks.filter(finished_at__isnull=True)
+    elif state == 'completed':
+        tasks = tasks.filter(finished_at__isnull=False)
+    elif state == 'expired':
+        tasks = tasks.filter(Q(deadline__lt=datetime.datetime.now().astimezone()) & Q(finished_at__isnull=True))
+
+        
     tasks = tasks.order_by('-created_at')
     paginator = Paginator(tasks, 5) 
     page_number = request.GET.get('page', page)

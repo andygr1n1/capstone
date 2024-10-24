@@ -1,7 +1,8 @@
 import { renderTasksRoot } from '../../application/app_react'
 
-export const fetchSelectedTasks = async (page: number) => {
-    await fetch(`/selectedTasks/${page}`)
+export const fetchSelectedTasks = async (props: { page: number; searchText?: string }) => {
+    const searchText = props.searchText || tasks_search_text || '___empty_search___'
+    await fetch(`/selectedTasks/${props.page}/${searchText}/${tasks_state}`)
         .then(data => {
             return data.json()
         })

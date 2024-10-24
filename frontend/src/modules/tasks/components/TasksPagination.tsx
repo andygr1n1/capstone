@@ -5,7 +5,7 @@ import { fetchSelectedTasks } from '../../../utils/api/fetchSelectedTasks'
 export const TasksPagination = () => {
     const onPageChange = async (page: number) => {
         tasks_current_page = page
-        fetchSelectedTasks(page)
+        fetchSelectedTasks({ page })
     }
     return (
         <Pagination

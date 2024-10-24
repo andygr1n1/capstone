@@ -22,7 +22,6 @@ python manage.py createsuperuser
 
 
 
-- search tasks by title
 - filter menu for active, completed and expired tasks
 - view detailed task (deadline, creation date, assigned users)
 - chat in task (messages on subscription to find out how to implement) (users related to task can chat)

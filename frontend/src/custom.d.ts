@@ -25,6 +25,8 @@ declare let tasks: {
 
 declare let tasks_num_pages: number
 declare let tasks_current_page: number
+declare let tasks_search_text: string
+declare let tasks_state: string
 
 declare const users: {
     id: number

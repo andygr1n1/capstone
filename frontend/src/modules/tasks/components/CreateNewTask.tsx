@@ -31,7 +31,7 @@ export const CreateNewTask = () => {
                 }
             })
             .catch(info => {
-                console.log('Validate Failed:', info)
+                console.error('Validate Failed:', info)
             })
             .finally(() => {
                 setIsLoading(false)
