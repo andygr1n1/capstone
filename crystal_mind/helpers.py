@@ -5,6 +5,8 @@ from django.core.paginator import Paginator
 from django.db.models import Q
 from django.core.mail import send_mail
 from django.conf import settings
+from channels.layers import get_channel_layer
+from asgiref.sync import async_to_sync
 
 def makeTasks(request, page, searchText='', state='all'):
     if searchText == '___empty_search___':
@@ -68,4 +70,30 @@ def sendTaskNotificationEmail(subject, message, recipient_list):
         settings.EMAIL_HOST_USER,
         recipient_list,
         fail_silently=False,
+    )
+
+def makeJsonTask(request, task):
+    return  {
+            "id": task.id,
+            "is_author": task.created_by == request.user if request.user.is_authenticated else False,
+            "author": {"id": task.created_by.id, "username": task.created_by.username},
+            "title": task.title,
+            "description": task.description,
+            "created_at": task.created_at.strftime("%Y-%m-%d %H:%M:%S"),
+            "deadline": task.deadline.strftime("%Y-%m-%d %H:%M:%S"),
+            "location": task.location,
+            "finished_at": task.finished_at.strftime("%Y-%m-%d %H:%M:%S") if task.finished_at else None,
+            "users": [{"id": user.id, "username": user.username} for user in task.users.all()],
+            "messages": [{"id": message.id, "content": message.content, "created_at": message.created_at.strftime("%Y-%m-%d %H:%M:%S")} for message in task.messages.all()],
+        }
+
+def triggerTasksSubscription(related_users):
+    # Notify WebSocket group
+    channel_layer = get_channel_layer()
+    async_to_sync(channel_layer.group_send)(
+        "tasks",
+        {
+            "type": "tasks_refresh",
+            "related_users": json.dumps(related_users)
+        }
     )
