@@ -22,8 +22,11 @@ python manage.py createsuperuser
 
 
 
-- toggle complete task
-- notifications to email on creating a task for related users
-- finish create new task
+- edit task (only author can edit)
+- delete task (only author can delete)
+- chat in task (messages on subscription to find out how to implement) (users related to task can chat)
+
+- Dashboard calendar with tasks filtered by date clicked (dates between deadline and creation date compare with current date)
+
 
 

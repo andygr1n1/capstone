@@ -5,7 +5,6 @@ const { Title } = Typography
 
 export const Login = () => {
     const onFinish = (values: { username: string; password: string }) => {
-        console.log('CSRF Token:', appCsrftoken)
         fetch('/login/', {
             method: 'POST',
             body: JSON.stringify(values),

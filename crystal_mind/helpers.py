@@ -1,11 +1,28 @@
+import datetime
 import json
 from .models import Task, User
 from django.core.paginator import Paginator
 from django.db.models import Q
+from django.core.mail import send_mail
+from django.conf import settings
 
-def makeTasks(request, page):
+def makeTasks(request, page, searchText='', state='all'):
+    if searchText == '___empty_search___':
+        searchText = ''
+
     tasks = Task.objects.filter(Q(users__id=request.user.id) | Q(created_by=request.user)).distinct()
-    print('tasks', tasks)
+    if searchText:
+        tasks = tasks.filter(Q(title__icontains=searchText) | Q(description__icontains=searchText))
+
+
+    elif state == 'active':
+        tasks = tasks.filter(finished_at__isnull=True)
+    elif state == 'completed':
+        tasks = tasks.filter(finished_at__isnull=False)
+    elif state == 'expired':
+        tasks = tasks.filter(Q(deadline__lt=datetime.datetime.now().astimezone()) & Q(finished_at__isnull=True))
+
+        
     tasks = tasks.order_by('-created_at')
     paginator = Paginator(tasks, 5) 
     page_number = request.GET.get('page', page)
@@ -22,6 +39,7 @@ def makeTasks(request, page):
             "created_at": task.created_at.strftime("%Y-%m-%d %H:%M:%S"),
             "deadline": task.deadline.strftime("%Y-%m-%d %H:%M:%S"),
             "location": task.location,
+            "finished_at": task.finished_at.strftime("%Y-%m-%d %H:%M:%S") if task.finished_at else None,
             "users": [{"id": user.id, "username": user.username} for user in task.users.all()],
             "messages": [{"id": message.id, "content": message.content, "created_at": message.created_at.strftime("%Y-%m-%d %H:%M:%S")} for message in task.messages.all()],
         })
@@ -42,3 +60,12 @@ def makeUsers(request):
         "users": users_data,
         "json": json.dumps(users_data)
     }
+
+def sendTaskNotificationEmail(subject, message, recipient_list):
+    send_mail(
+        subject,
+        message,
+        settings.EMAIL_HOST_USER,
+        recipient_list,
+        fail_silently=False,
+    )

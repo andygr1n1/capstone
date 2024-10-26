@@ -19,7 +19,6 @@ export const MobileMenu = () => {
                 <ul className="flex flex-col gap-4">
                     {isAuthenticated ? (
                         <>
-                            {' '}
                             <li>
                                 <Button className="w-full" size="large" type={selectedLocation('')} href="/">
                                     Dashboard
@@ -28,16 +27,6 @@ export const MobileMenu = () => {
                             <li>
                                 <Button className="w-full" size="large" type={selectedLocation('tasks')} href="/tasks">
                                     Tasks
-                                </Button>
-                            </li>
-                            <li>
-                                <Button className="w-full" size="large" type={selectedLocation('events')} href="/events">
-                                    Events
-                                </Button>
-                            </li>
-                            <li>
-                                <Button className="w-full" size="large" type={selectedLocation('notes')} href="/notes">
-                                    Notes
                                 </Button>
                             </li>
                             <li>
