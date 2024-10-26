@@ -5,7 +5,6 @@ import { fetchSelectedTasks } from '../../../../utils/api/fetchSelectedTasks'
 
 export const TasksFilterByState = () => {
     const onChange = (e: RadioChangeEvent) => {
-        console.log(`radio checked:${e.target.value}`)
         tasks_state = e.target.value
 
         fetchSelectedTasks({ page: 1 })

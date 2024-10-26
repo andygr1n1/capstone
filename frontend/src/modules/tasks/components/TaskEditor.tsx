@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Button, Modal, Form, Input, DatePicker, Select } from 'antd'
 const { Option } = Select
 
-export const CreateNewTask = () => {
+export const TaskEditor = () => {
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const [form] = Form.useForm()

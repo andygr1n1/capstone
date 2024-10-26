@@ -21,6 +21,10 @@ declare let tasks: {
     created_at: string
     is_author: boolean
     finished_at: string | null
+    users: {
+        id: number
+        username: string
+    }[]
 }[]
 
 declare let tasks_num_pages: number

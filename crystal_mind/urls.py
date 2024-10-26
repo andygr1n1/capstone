@@ -9,6 +9,8 @@ urlpatterns = [
     path("tasks/", views.tasks, name="tasks"),
     # js
     path("createTask", views.createTask, name="createTask"),
+    path("fetchTask", views.fetchTask, name="fetchTask"),
+    path("deleteTask", views.deleteTask, name="deleteTask"),
     path("selectedTasks/<int:page>/<str:searchText>/<str:state>/", views.selectedTasks, name="selectedTasks"),
     path("selectedTasks/<int:page>/", views.selectedTasks, name="selectedTasks"),
     path("toggleCompleteTask/", views.toggleCompleteTask, name="toggleCompleteTask"),

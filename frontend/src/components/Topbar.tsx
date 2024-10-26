@@ -34,12 +34,6 @@ export const Topbar = () => {
                                 <Button shape="round" type={selectedLocation('tasks')} href="/tasks">
                                     Tasks
                                 </Button>
-                                <Button shape="round" type={selectedLocation('events')} href="/events">
-                                    Events
-                                </Button>
-                                <Button shape="round" type={selectedLocation('notes')} href="/notes">
-                                    Notes
-                                </Button>
                             </div>
                             <LogOutButton />
                         </>
