@@ -7,11 +7,10 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 from .models import User, Task
 from django.db.models import Q
-from .helpers import makeTasks, makeUsers
-from channels.layers import get_channel_layer
-from asgiref.sync import async_to_sync
+from .helpers import makeTasks, makeUsers, makeJsonTask, triggerTasksSubscription
 from django.contrib.auth.decorators import login_required
 from .helpers import sendTaskNotificationEmail
+
 
 def index(request):
     return render(request, "index.html")
@@ -83,6 +82,7 @@ def selectedTasks(request, page, searchText='', state='all'):
 def createTask(request):
     if request.method == "POST":
         form = json.loads(request.body)
+
         if "id" in form:
             task = Task.objects.get(id=form["id"])
             task.title = form["title"]
@@ -97,24 +97,20 @@ def createTask(request):
                 deadline=form["deadline"],
                 created_by=request.user
             )
+
         task.save()
         
         if "users" in form:
             task.users.set(form["users"])
         
-        related_users = [request.user.id] + form["users"] if "users" in form else [request.user.id]
         # Notify WebSocket group
-        channel_layer = get_channel_layer()
-        async_to_sync(channel_layer.group_send)(
-            "tasks",
-            {
-                "type": "tasks_refresh",
-                "related_users": json.dumps(related_users)
-            }
-        )
+        related_users = [request.user.id] + form["users"] if "users" in form else [request.user.id]
+        triggerTasksSubscription(related_users)
+     
 
+        # only if task is created
         # send email to related users
-        if "users" in form:
+        if not "id" in form and "users" in form:
             recipient_emails = [user.email for user in task.users.all() if user.email]
             sendTaskNotificationEmail(
                 subject="New Task Created",
@@ -122,20 +118,23 @@ def createTask(request):
                 recipient_list=recipient_emails
             )
         
+       
+
         task = Task.objects.get(id=task.id)
-        jsonTask = {
-            "id": task.id,
-            "is_author": task.created_by == request.user if request.user.is_authenticated else False,
-            "author": {"id": task.created_by.id, "username": task.created_by.username},
-            "title": task.title,
-            "description": task.description,
-            "created_at": task.created_at.strftime("%Y-%m-%d %H:%M:%S"),
-            "deadline": task.deadline.strftime("%Y-%m-%d %H:%M:%S"),
-            "location": task.location,
-            "finished_at": task.finished_at.strftime("%Y-%m-%d %H:%M:%S") if task.finished_at else None,
-            "users": [{"id": user.id, "username": user.username} for user in task.users.all()],
-            "messages": [{"id": message.id, "content": message.content, "created_at": message.created_at.strftime("%Y-%m-%d %H:%M:%S")} for message in task.messages.all()],
-        }
+        jsonTask = makeJsonTask(request, task)
+        # jsonTask = {
+        #     "id": task.id,
+        #     "is_author": task.created_by == request.user if request.user.is_authenticated else False,
+        #     "author": {"id": task.created_by.id, "username": task.created_by.username},
+        #     "title": task.title,
+        #     "description": task.description,
+        #     "created_at": task.created_at.strftime("%Y-%m-%d %H:%M:%S"),
+        #     "deadline": task.deadline.strftime("%Y-%m-%d %H:%M:%S"),
+        #     "location": task.location,
+        #     "finished_at": task.finished_at.strftime("%Y-%m-%d %H:%M:%S") if task.finished_at else None,
+        #     "users": [{"id": user.id, "username": user.username} for user in task.users.all()],
+        #     "messages": [{"id": message.id, "content": message.content, "created_at": message.created_at.strftime("%Y-%m-%d %H:%M:%S")} for message in task.messages.all()],
+        # }
 
         return JsonResponse({"task": json.dumps(jsonTask)}) 
     else:
@@ -181,7 +180,12 @@ def deleteTask(request):
     try:
         form = json.loads(request.body)
         task = Task.objects.get(id=form["taskId"])
+    
+        related_users = [request.user.id] + list(task.users.all().values_list('id', flat=True))
+
         task.delete()
+  
+        triggerTasksSubscription(related_users) 
         return JsonResponse({"status": "success"})
     except Exception as e:
         return JsonResponse({"status": "error", "message": str(e)})
