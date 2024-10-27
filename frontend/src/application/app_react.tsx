@@ -6,7 +6,7 @@ import '../styles/index.scss'
 import { Footer } from '../components/Footer'
 import { AnonymousLogin } from '../components/AnonymousLogin'
 import { Register } from '../components/Register'
-import { AuthenticatedLogin } from '../components/AuthenticatedLogin'
+import { DashboardIndex } from '../modules/dashboard/DashboardIndex'
 import { Login } from '../components/Login'
 import { Tasks } from '../modules/tasks/Tasks'
 import { BrowserRouter } from 'react-router-dom'
@@ -41,7 +41,7 @@ if (anonymousLoginRoot) {
 const authenticatedLoginRoot = document.getElementById('authenticated-login')
 if (authenticatedLoginRoot) {
     const authenticatedLoginRootElement = createRoot(authenticatedLoginRoot)
-    authenticatedLoginRootElement.render(<AuthenticatedLogin />)
+    authenticatedLoginRootElement.render(<DashboardIndex />)
 }
 
 const registerRoot = document.getElementById('register')
