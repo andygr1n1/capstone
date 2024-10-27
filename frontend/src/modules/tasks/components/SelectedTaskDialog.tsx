@@ -43,6 +43,7 @@ export const SelectedTaskDialog = () => {
                     selectedTask={selectedTask}
                     onClose={() => setTaskId(null)}
                     toggleEditMode={() => setEditMode(!editMode)}
+                    fetchTask={(taskId: number) => fetchTask(taskId)}
                 />
             ) : (
                 <SelectedTaskEditor
@@ -50,8 +51,6 @@ export const SelectedTaskDialog = () => {
                     selectedTask={selectedTask}
                     toggleEditMode={() => setEditMode(prev => !prev)}
                     setSelectedTask={(task: ITask) => {
-                        console.log('task>>>', task)
-                        console.log('selectedTask>>>', selectedTask)
                         setSelectedTask(task)
                     }}
                 />

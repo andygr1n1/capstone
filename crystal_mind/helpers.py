@@ -43,7 +43,18 @@ def makeTasks(request, page, searchText='', state='all'):
             "location": task.location,
             "finished_at": task.finished_at.strftime("%Y-%m-%d %H:%M:%S") if task.finished_at else None,
             "users": [{"id": user.id, "username": user.username} for user in task.users.all()],
-            "messages": [{"id": message.id, "content": message.content, "created_at": message.created_at.strftime("%Y-%m-%d %H:%M:%S")} for message in task.messages.all()],
+            "messages": [
+                {
+                    "id": message.id,
+                    "content": message.content,
+                    "created_at": message.created_at.strftime("%Y-%m-%d %H:%M:%S"),
+                    "created_by": {
+                        "id": message.created_by.id,
+                        "username": message.created_by.username
+                    }
+                }
+                for message in task.messages.all().order_by('-created_at')
+            ],
         })
 
     return {
@@ -84,7 +95,18 @@ def makeJsonTask(request, task):
             "location": task.location,
             "finished_at": task.finished_at.strftime("%Y-%m-%d %H:%M:%S") if task.finished_at else None,
             "users": [{"id": user.id, "username": user.username} for user in task.users.all()],
-            "messages": [{"id": message.id, "content": message.content, "created_at": message.created_at.strftime("%Y-%m-%d %H:%M:%S")} for message in task.messages.all()],
+            "messages": [
+                {
+                    "id": message.id,
+                    "content": message.content,
+                    "created_at": message.created_at.strftime("%Y-%m-%d %H:%M:%S"),
+                    "created_by": {
+                        "id": message.created_by.id,
+                        "username": message.created_by.username
+                    }
+                }
+                for message in task.messages.all().order_by('-created_at')
+            ],
         }
 
 def triggerTasksSubscription(related_users):
@@ -97,3 +119,12 @@ def triggerTasksSubscription(related_users):
             "related_users": json.dumps(related_users)
         }
     )
+
+def triggerMessengerSubscription(task):
+    channel_layer = get_channel_layer()
+    async_to_sync(channel_layer.group_send)(
+        f"task_{task.id}",
+        {
+            "type": "messenger_refresh",
+        }
+    )   

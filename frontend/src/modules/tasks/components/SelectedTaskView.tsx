@@ -4,6 +4,7 @@ import { Modal, Typography, Divider, Tag, Button } from 'antd'
 import { deleteTask } from '../../../utils/api/deleteTask'
 import { cn } from '../../../utils/cn'
 import dayjs from 'dayjs'
+import { TaskMessenger } from './task-messenger/TaskMessenger'
 
 const { Text } = Typography
 
@@ -11,7 +12,8 @@ export const SelectedTaskView: React.FC<{
     selectedTask: ITask
     onClose: () => void
     toggleEditMode: () => void
-}> = ({ selectedTask, onClose, toggleEditMode }) => {
+    fetchTask: (taskId: number) => void
+}> = ({ selectedTask, onClose, toggleEditMode, fetchTask }) => {
     return (
         <>
             <p>{selectedTask.description}</p>
@@ -58,6 +60,7 @@ export const SelectedTaskView: React.FC<{
                     <Text className="text-xs">{dayjs(selectedTask.finished_at).format('DD MMM YYYY HH:mm')}</Text>
                 </div>
             )}
+            <TaskMessenger task={selectedTask} fetchTask={fetchTask} />
             <div className={cn('flex gap-2 mt-5', selectedTask.is_author ? ' justify-between' : 'justify-end')}>
                 {selectedTask.is_author && (
                     <Button
@@ -67,7 +70,6 @@ export const SelectedTaskView: React.FC<{
                         onClick={() => {
                             Modal.confirm({
                                 onOk: async () => {
-                                    console.log('ok')
                                     await deleteTask(selectedTask.id)
                                     onClose()
                                 },

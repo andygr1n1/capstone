@@ -25,6 +25,7 @@ declare let tasks: {
         id: number
         username: string
     }[]
+    messages: IMessage[]
 }[]
 
 declare let tasks_num_pages: number

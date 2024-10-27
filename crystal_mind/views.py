@@ -5,9 +5,9 @@ from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse
-from .models import User, Task
+from .models import User, Task, Message
 from django.db.models import Q
-from .helpers import makeTasks, makeUsers, makeJsonTask, triggerTasksSubscription
+from .helpers import makeTasks, makeUsers, makeJsonTask, triggerTasksSubscription, triggerMessengerSubscription
 from django.contrib.auth.decorators import login_required
 from .helpers import sendTaskNotificationEmail
 
@@ -122,19 +122,6 @@ def createTask(request):
 
         task = Task.objects.get(id=task.id)
         jsonTask = makeJsonTask(request, task)
-        # jsonTask = {
-        #     "id": task.id,
-        #     "is_author": task.created_by == request.user if request.user.is_authenticated else False,
-        #     "author": {"id": task.created_by.id, "username": task.created_by.username},
-        #     "title": task.title,
-        #     "description": task.description,
-        #     "created_at": task.created_at.strftime("%Y-%m-%d %H:%M:%S"),
-        #     "deadline": task.deadline.strftime("%Y-%m-%d %H:%M:%S"),
-        #     "location": task.location,
-        #     "finished_at": task.finished_at.strftime("%Y-%m-%d %H:%M:%S") if task.finished_at else None,
-        #     "users": [{"id": user.id, "username": user.username} for user in task.users.all()],
-        #     "messages": [{"id": message.id, "content": message.content, "created_at": message.created_at.strftime("%Y-%m-%d %H:%M:%S")} for message in task.messages.all()],
-        # }
 
         return JsonResponse({"task": json.dumps(jsonTask)}) 
     else:
@@ -159,19 +146,7 @@ def fetchTask(request):
     try:
         form = json.loads(request.body)
         task = Task.objects.get(id=form["taskId"])
-        jsonTask = {
-            "id": task.id,
-            "is_author": task.created_by == request.user if request.user.is_authenticated else False,
-            "author": {"id": task.created_by.id, "username": task.created_by.username},
-            "title": task.title,
-            "description": task.description,
-            "created_at": task.created_at.strftime("%Y-%m-%d %H:%M:%S"),
-            "deadline": task.deadline.strftime("%Y-%m-%d %H:%M:%S"),
-            "location": task.location,
-            "finished_at": task.finished_at.strftime("%Y-%m-%d %H:%M:%S") if task.finished_at else None,
-            "users": [{"id": user.id, "username": user.username} for user in task.users.all()],
-            "messages": [{"id": message.id, "content": message.content, "created_at": message.created_at.strftime("%Y-%m-%d %H:%M:%S")} for message in task.messages.all()],
-        }
+        jsonTask = makeJsonTask(request, task)
         return JsonResponse({"task": json.dumps(jsonTask)}) 
     except Exception as e:
         return JsonResponse({"status": "error", "message": str(e)})
@@ -184,8 +159,25 @@ def deleteTask(request):
         related_users = [request.user.id] + list(task.users.all().values_list('id', flat=True))
 
         task.delete()
-  
+
         triggerTasksSubscription(related_users) 
+        return JsonResponse({"status": "success"})
+    except Exception as e:
+        return JsonResponse({"status": "error", "message": str(e)})
+
+def sendMessage(request):
+    try:
+        form = json.loads(request.body)
+        task = Task.objects.get(id=form["task_id"])
+
+        Message.objects.create(
+            content=form["new_message"],
+            task=task,
+            created_by=request.user
+        )
+
+        triggerMessengerSubscription(task)
+
         return JsonResponse({"status": "success"})
     except Exception as e:
         return JsonResponse({"status": "error", "message": str(e)})

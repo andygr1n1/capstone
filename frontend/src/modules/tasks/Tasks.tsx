@@ -20,9 +20,7 @@ export const Tasks = () => {
     const [taskId, setTaskId] = useState<number | null>(null)
 
     useEffect(() => {
-        console.log('->> websocket frontend connected')
         const socket = new WebSocket(`ws://${window.location.host}/ws/tasks/`)
-        console.log('->> socket', socket)
         socket.onmessage = event => {
             const data = JSON.parse(event.data)
             const relatedUsers = JSON.parse(data.related_users)
@@ -30,6 +28,10 @@ export const Tasks = () => {
             if (data.type === 'tasks_refresh' && userInRelatedUsers) {
                 fetchSelectedTasks({ page: tasks_current_page })
             }
+        }
+
+        return () => {
+            socket.close()
         }
     }, [])
 

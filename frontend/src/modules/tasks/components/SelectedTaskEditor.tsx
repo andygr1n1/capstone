@@ -28,7 +28,6 @@ export const SelectedTaskEditor: React.FC<{
                 })
                 if (res.ok) {
                     const data = await res.json()
-                    console.log('data', data.task)
                     setSelectedTask(JSON.parse(data.task))
                     toggleEditMode()
                     form.resetFields()
@@ -43,8 +42,6 @@ export const SelectedTaskEditor: React.FC<{
                 toggleIsLoading()
             })
     }
-
-    console.log(selectedTask)
 
     return (
         <Form
