@@ -126,12 +126,30 @@ The crystal_mind folder is likely a Django app within the capstone project. It c
 
 
 
-# Development
+# Development (Unix)
 
+-   python -m venv myenv
 -   source myenv/bin/activate
 -   pip install --no-cache-dir -r requirements.txt
 -   python manage.py makemigrations crystal_mind
 -   python manage.py migrate
 -   python manage.py createsuperuser
+-   npm install
 -   npm run dev (for the front-end)
 -   uvicorn capstone.asgi:application --host 127.0.0.1 --port 8000 (for the back-end)
+
+
+# Notes
+
+-   https://python-webpack-boilerplate.readthedocs.io/en/latest/setup_with_django/ as webpack boilerplate
+-   pip freeze > requirements.txt (to create requirements.txt)
+-   pip install --no-cache-dir -r requirements.txt (to install dependencies)
+-   python manage.py createsuperuser (to create a superuser)
+-   python manage.py makemigrations crystal_mind (to create migrations for the crystal_mind app)
+-   python manage.py migrate (to apply migrations to the database)
+-   python manage.py collectstatic (to collect static files if needed)
+-   python manage.py runserver (for http requests, ws will not work with this)
+-   pip install "uvicorn[standard]" (to install uvicorn)
+-   uvicorn capstone.asgi:application --host 127.0.0.1 --port 8000 (for websockets)
+
+
