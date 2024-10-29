@@ -4,6 +4,7 @@ import { cn } from '../../../utils/cn'
 import dayjs from 'dayjs'
 import { TaskMessenger } from './task-messenger/TaskMessenger'
 import { useRoot$ } from '../../../../mst/StoreProvider'
+import { cloneDeep } from 'lodash-es'
 
 const { Text } = Typography
 
@@ -12,6 +13,8 @@ export const SelectedTaskView: React.FC<{
     readonly?: boolean
 }> = ({ toggleEditMode, readonly = false }) => {
     const { selected_task, onChangeField, deleteTask } = useRoot$()
+
+    console.log(cloneDeep(selected_task))
 
     if (!selected_task) return null
 
@@ -36,7 +39,7 @@ export const SelectedTaskView: React.FC<{
                         <Text strong>Related Users: </Text>
                         <div className="flex flex-wrap gap-2 my-2">
                             {selected_task.users.map(user => (
-                                <Tag color={user.id === appUser?.id ? 'gold' : 'blue'} key={user.id}>
+                                <Tag color={selected_task.author?.id === user.id ? 'gold' : 'blue'} key={user.id}>
                                     {user.username}
                                 </Tag>
                             ))}

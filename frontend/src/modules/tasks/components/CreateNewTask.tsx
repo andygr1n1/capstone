@@ -14,9 +14,9 @@ export const CreateNewTask = () => {
     }
 
     const handleOk = async () => {
-        setIsLoading(true)
         form.validateFields()
             .then(async values => {
+                setIsLoading(true)
                 const res = await fetch('/createTask', {
                     method: 'POST',
                     headers: {
@@ -50,6 +50,7 @@ export const CreateNewTask = () => {
                 New task
             </Button>
             <Modal
+                destroyOnClose
                 loading={isLoading}
                 title="Create new task"
                 open={isModalOpen}
