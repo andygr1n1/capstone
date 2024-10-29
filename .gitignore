@@ -4,3 +4,5 @@ node_modules
 /frontend/dist
 /frontend/build
 /myenv
+.setup.txt
+db.sqlite3

@@ -1,4 +1,4 @@
-# Capstone is a Virtual Event Planner and Scheduler.
+# Capstone Crystal Mind is a Virtual Event Planner and Scheduler.
 
 ## This web application is utilizing:
 
@@ -13,17 +13,27 @@ A platform for planning, managing, and attending virtual events and tasks. Users
 
 ## Distinctiveness and Complexity
 
-### Key Features (Distinctiveness):
+This project stands out due to its innovative approach to virtual event planning and scheduling, leveraging real-time communication technologies to enhance user interaction and collaboration.
 
--   Event Creation and Management: Users can create events with details like location (physical or virtual), agenda, participants, and tasks.
--   Participant Collaboration: An interactive messenger for each event where participants can chat.
--   Schedule Integration: Calendar view for managing events.
+Here are the key aspects that highlight its distinctiveness and complexity:
 
-### Complexity Elements:
+1. Real-Time Communication with WebSockets:
+The project utilizes WebSockets to enable real-time communication between users. This is evident in the implementation of features such as the interactive messenger for event participants, which allows for instant messaging and updates without the need for page refreshes.
+The use of Django Channels and WebSockets facilitates real-time updates for tasks, ensuring that all participants have the most current information. This is a significant enhancement over traditional HTTP-based communication, which can be slower and less interactive.
 
--   Calendar integration: functional calendar for managing tasks and events.
--   Real-Time Communication: Implement WebSockets for real-time chat and event updates.
--   Django Signals: email reminders on creation of event.
+2. Advanced Event Management Features:
+Users can create and manage tasks with detailed information, including physical or virtual locations, agendas, participants. 
+
+3. Integration of Modern Front-End Technologies:
+The front-end is built using React and TypeScript, with TailwindCSS for styling and the Ant Design library for UI components.
+4. Scalable and Maintainable Architecture:
+The project is structured to support scalability and maintainability, with a clear separation between the front-end and back-end components. The use of Docker for containerization further enhances its scalability, allowing for easy deployment and management across different environments.
+
+5. Comprehensive User Management and Collaboration:
+The platform supports user authentication and authorization, ensuring secure access to event management features. The integration of Django Signals for email reminders adds another layer of complexity, automating communication and enhancing user engagement.
+
+6. Responsive and Mobile-Friendly Design:
+The application is designed to be mobile-responsive, ensuring a seamless experience across different devices. This requires careful consideration of layout and interaction design.
 
 ## Installation and Setup
 
@@ -70,6 +80,11 @@ tsconfig.json is the configuration file for the typescript compiler.
 
 These files are needed for the tailwindcss to work.
 
+### root files with dot
+
+Generally files that starts with dot are configuration files for different tools.
+They are configured by the documentation of the tool.
+
 ### frontend folder ( > src)
 
 frontend folder contains the front-end part of the application.
@@ -80,33 +95,43 @@ There are a lot of files here, but generally they are all needed for the applica
 
 ### capstone folder
 
-capstone folder contains the back-end part of the application - django.
+The capstone folder is the main Django project directory. It contains the core configuration and entry points for the Django application. Here's a breakdown of its contents:
 
-The capstone folder is structured as follows:
+-   **settings.py**: This file contains all the settings and configurations for the Django project, such as database settings, installed apps, middleware, and more.
+-   **urls.py**: This file contains the URL declarations for the Django project, mapping URL paths to views.
+-   **wsgi.py**: This is the entry point for WSGI-compatible web servers to serve the project. It's used for deploying the application in a production environment.
+-   **asgi.py**: This is the entry point for ASGI-compatible web servers, which is useful for handling asynchronous tasks and WebSockets.
+-   **templates/**: This directory contains HTML templates for the project, which are used to render the front-end views.
+-   **migrations/**: This directory contains database migration files, which are used to apply changes to the database schema.
+-   **admin.py**: This file contains the admin interface definitions, allowing for the management of models through the Django admin site.
+-   **apps.py**: This file contains the application configuration, defining the app's metadata.
+-   **models.py**: This file contains the data models for the application, defining the structure of the database tables.
+-   **tests.py**: This file contains the test cases for the application, used to ensure the code works as expected.
+-   **views.py**: This file contains the view functions for the application, which handle requests and return responses.
+-   **urls.py**: This file is mentioned twice, likely indicating a mistake in the description. It should be the same as the one listed earlier.
 
--   **capstone/**: The main Django project folder.
+### crystal_mind folder
 
-    -   **settings.py**: Contains all the settings and configurations for the Django project.
-    -   **urls.py**: Contains the URL declarations for the Django project.
-    -   **wsgi.py**: The entry point for WSGI-compatible web servers to serve project.
-    -   **asgi.py**: The entry point for ASGI-compatible web servers to serve project.
-    -   **templates/**: Contains HTML templates for the project.
-    -   **migrations/**: Contains database migration files.
-    -   **admin.py**: Contains the admin interface definitions.
-    -   **apps.py**: Contains the application configuration.
-    -   **models.py**: Contains the data models for the application.
-    -   **tests.py**: Contains the test cases for the application.
-    -   **views.py**: Contains the view functions for the application.
-    -   **urls.py**: Contains the URL declarations for the application.
+The crystal_mind folder is likely a Django app within the capstone project. It contains specific functionality and features related to the application. Here's a breakdown of its contents:
 
-This structure helps in maintaining a clean and organized codebase, making it easier to manage and scale the application.
+-   **models.py**: Defines the data models specific to the crystal_mind app, such as User, Task, and Message.
+-   **views.py**: Contains the view functions specific to the crystal_mind app, handling requests and returning responses for this app's features.
+-   **urls.py**: Contains the URL declarations specific to the crystal_mind app, mapping URL paths to views within this app.
+-   **admin.py**: Contains the admin interface definitions for the crystal_mind app, allowing for the management of its models through the Django admin site.
+-   **apps.py**: Contains the application configuration for the crystal_mind app, defining its metadata.
+-   **templates/**: Contains HTML templates specific to the crystal_mind app, used to render its front-end views.
+-   **migrations/**: Contains database migration files specific to the crystal_mind app, used to apply changes to its database schema.
+-   **consumers.py**: Contains WebSocket consumers for handling real-time communication features.
+-   **routing.py**: Defines the WebSocket URL routing for the crystal_mind app.
 
-### root files with dot
 
-Generally files that starts with dot are configuration files for different tools.
-They are configured by the documentation of the tool.
 
 # Development
 
+-   source myenv/bin/activate
+-   pip install --no-cache-dir -r requirements.txt
+-   python manage.py makemigrations crystal_mind
+-   python manage.py migrate
+-   python manage.py createsuperuser
 -   npm run dev (for the front-end)
--   python manage.py runserver (for the back-end)
+-   uvicorn capstone.asgi:application --host 127.0.0.1 --port 8000 (for the back-end)
