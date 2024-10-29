@@ -1,7 +1,7 @@
 const glob = require('glob')
 const Path = require('path')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
-const CopyWebpackPlugin = require('copy-webpack-plugin')
+// const CopyWebpackPlugin = require('copy-webpack-plugin')
 const WebpackAssetsManifest = require('webpack-assets-manifest')
 
 const getEntryObject = () => {
@@ -36,9 +36,9 @@ module.exports = {
     },
     plugins: [
         new CleanWebpackPlugin(),
-        new CopyWebpackPlugin({
-            patterns: [{ from: Path.resolve(__dirname, '../vendors'), to: 'vendors' }],
-        }),
+        // new CopyWebpackPlugin({
+        //     patterns: [{ from: Path.resolve(__dirname, '../vendors'), to: 'vendors' }],
+        // }),
         new WebpackAssetsManifest({
             entrypoints: true,
             output: 'manifest.json',
