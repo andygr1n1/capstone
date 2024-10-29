@@ -1,60 +1,31 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Modal } from 'antd'
-import { TaskContext } from '../Tasks'
-import { ITask } from '../../../utils/types'
-import { fetchTaskById } from '../../../utils/api/fetchTaskById'
 import { SelectedTaskView } from './SelectedTaskView'
 import { SelectedTaskEditor } from './SelectedTaskEditor'
+import { useRoot$ } from '../../../../mst/StoreProvider'
+import { observer } from 'mobx-react-lite'
 
-export const SelectedTaskDialog = () => {
-    const { setTaskId, taskId } = useContext(TaskContext)
-    const [isLoading, setIsLoading] = useState(false)
+export const SelectedTaskDialog: React.FC<{ readonly?: boolean }> = observer(({ readonly = false }) => {
     const [editMode, setEditMode] = useState(false)
-    const [selectedTask, setSelectedTask] = useState<ITask | null>(null)
 
-    const fetchTask = async (taskId: number) => {
-        await fetchTaskById(taskId).then(data => {
-            setSelectedTask(data)
-        })
-    }
-
-    useEffect(() => {
-        if (taskId) {
-            fetchTask(taskId)
-        }
-    }, [taskId])
-
-    if (!selectedTask) return null
+    const { selected_task, onChangeField } = useRoot$()
 
     return (
         <Modal
-            loading={isLoading}
             destroyOnClose
-            open={!!taskId}
-            title={selectedTask?.title}
+            open={!!selected_task}
+            title={selected_task?.title}
             onCancel={() => {
                 setEditMode(false)
-                setTaskId(null)
+                onChangeField('selected_task', undefined)
             }}
             footer={null}
         >
             {!editMode ? (
-                <SelectedTaskView
-                    selectedTask={selectedTask}
-                    onClose={() => setTaskId(null)}
-                    toggleEditMode={() => setEditMode(!editMode)}
-                    fetchTask={(taskId: number) => fetchTask(taskId)}
-                />
+                <SelectedTaskView toggleEditMode={() => setEditMode(!editMode)} readonly={readonly} />
             ) : (
-                <SelectedTaskEditor
-                    toggleIsLoading={() => setIsLoading(prev => !prev)}
-                    selectedTask={selectedTask}
-                    toggleEditMode={() => setEditMode(prev => !prev)}
-                    setSelectedTask={(task: ITask) => {
-                        setSelectedTask(task)
-                    }}
-                />
+                <SelectedTaskEditor toggleEditMode={() => setEditMode(prev => !prev)} />
             )}
         </Modal>
     )
-}
+})

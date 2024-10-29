@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
 import { Button, Modal, Form, Input, DatePicker, Select } from 'antd'
+import { useRoot$ } from '../../../../mst/StoreProvider'
 const { Option } = Select
 
-export const TaskEditor = () => {
+export const CreateNewTask = () => {
+    const { users, tasks_current_page } = useRoot$()
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const [form] = Form.useForm()

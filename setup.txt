@@ -22,11 +22,7 @@ python manage.py createsuperuser
 
 
 
-- edit task (only author can edit)
-- delete task (only author can delete)
-- chat in task (messages on subscription to find out how to implement) (users related to task can chat)
 
-- Dashboard calendar with tasks filtered by date clicked (dates between deadline and creation date compare with current date)
-
-
-
+show only active tasks
+if task is with deadline it should show in every day of deadline
+to fix crud operations in dashboard (edit, delete, toggle completed)

@@ -6,13 +6,5 @@
 {% if user.is_authenticated %}
 {% csrf_token %}
 <div class="root relative" id="tasks"></div>
-<script defer>
-    const users = JSON.parse('{{ users_json|escapejs|safe }}');
-    let tasks = JSON.parse('{{ tasks_json|escapejs|safe }}');
-    let tasks_num_pages = JSON.parse('{{ num_pages|escapejs|safe }}');
-    let tasks_current_page = JSON.parse('{{ current_page|escapejs|safe }}');
-    let tasks_search_text = ''
-    let tasks_state = 'all'
-</script>
 {% endif %}
 {% endblock %}

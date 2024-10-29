@@ -1,11 +1,7 @@
 {
     "ignorePatterns": ["**/*.d.ts"],
     "parser": "@typescript-eslint/parser",
-        "extends": [
-        "eslint:recommended",
-        "plugin:@typescript-eslint/recommended",
-        "plugin:react/recommended"
-    ],
+    "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended", "plugin:react/recommended"],
     "env": {
         "browser": true,
         "node": true
@@ -22,6 +18,7 @@
         }
     },
     "rules": {
-        "semi": 0
+        "semi": 0,
+        "@typescript-eslint/no-empty-object-type": 0
     }
 }

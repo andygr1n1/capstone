@@ -8,7 +8,7 @@ from django.conf import settings
 from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
 
-def makeTasks(request, page, searchText='', state='all'):
+def makeTasks(request, page, searchText='', state='active'):
     if searchText == '___empty_search___':
         searchText = ''
 
@@ -17,21 +17,21 @@ def makeTasks(request, page, searchText='', state='all'):
         tasks = tasks.filter(Q(title__icontains=searchText) | Q(description__icontains=searchText))
 
 
-    elif state == 'active':
+
+    if state == 'active':
         tasks = tasks.filter(finished_at__isnull=True)
     elif state == 'completed':
         tasks = tasks.filter(finished_at__isnull=False)
     elif state == 'expired':
         tasks = tasks.filter(Q(deadline__lt=datetime.datetime.now().astimezone()) & Q(finished_at__isnull=True))
 
-        
     tasks = tasks.order_by('-created_at')
     paginator = Paginator(tasks, 5) 
-    page_number = request.GET.get('page', page)
-    page_obj = paginator.get_page(page_number)
+    page_obj = paginator.get_page(page)
     tasks_data = []
 
-    for task in page_obj:
+    # to get all tasks without pagination use page -1
+    for task in (page == -1 and tasks or page_obj):
         tasks_data.append({
             "id": task.id,
             "is_author": task.created_by == request.user if request.user.is_authenticated else False,
@@ -61,7 +61,6 @@ def makeTasks(request, page, searchText='', state='all'):
         "json": json.dumps(tasks_data),
         "tasks": tasks_data,
         'num_pages': paginator.num_pages,
-        'current_page': page_obj.number
     }
 
 def makeUsers(request):

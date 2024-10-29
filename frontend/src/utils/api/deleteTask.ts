@@ -1,21 +1,13 @@
-import { renderTasksRoot } from "../../application/app_react"
-
-export const deleteTask = async (taskId: number) => {
+export const deleteTask = async ({ task_id }: { task_id: number }) => {
     await fetch('/deleteTask', {
         method: 'POST',
-        body: JSON.stringify({ taskId }),
+        body: JSON.stringify({ task_id }),
         headers: {
             'Content-Type': 'application/json',
             'X-CSRFToken': appCsrftoken,
         },
+    }).catch(error => {
+        console.error('Error /deleteTask:', error)
+        return null
     })
-        .then(() => {
-            tasks = tasks.filter(task => task.id !== taskId)
-            renderTasksRoot()
-        })
-
-        .catch(error => {
-            console.error('Error /deleteTask:', error)
-            return null
-        })
 }

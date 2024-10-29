@@ -1,7 +1,7 @@
 import React from 'react'
-import { IMessage } from '../../../../utils/types'
 import { Card } from 'antd'
 import dayjs from 'dayjs'
+import { IMessage } from '../../../../../mst/types'
 export const Message: React.FC<{ message: IMessage }> = ({ message }) => {
     return (
         <Card className="mb-4 shadow-lg">

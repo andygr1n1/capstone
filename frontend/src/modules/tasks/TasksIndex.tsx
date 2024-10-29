@@ -1,15 +1,13 @@
 import React from 'react'
-
 import { root$, Root$Provider } from '../../../mst/StoreProvider'
-import { Dashboard } from './Dashboard'
+import { Tasks } from './Tasks'
 import { useInitModule } from '../../hooks/useInitModule'
 
-export const DashboardIndex = () => {
-    useInitModule({ page: -1, searchText: '', state: 'active' })
-
+export const TasksIndex = () => {
+    useInitModule({ page: 1, searchText: '', state: 'active' })
     return (
         <Root$Provider store={root$}>
-            <Dashboard />
+            <Tasks />
         </Root$Provider>
     )
 }

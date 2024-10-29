@@ -1,7 +1,7 @@
-export const fetchTaskById = async (taskId: number) => {
+export const fetchTaskById = async ({ task_id }: { task_id: number }) => {
     return await fetch('/fetchTask', {
         method: 'POST',
-        body: JSON.stringify({ taskId }),
+        body: JSON.stringify({ task_id }),
         headers: {
             'Content-Type': 'application/json',
             'X-CSRFToken': appCsrftoken,

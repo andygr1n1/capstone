@@ -1,14 +1,16 @@
-import React, { useContext } from 'react'
-import { ITask } from '../../../utils/types'
+import React from 'react'
 import { Card, Divider, Typography } from 'antd'
 import { ToggleCompleteTask } from './ToggleCompleteTask'
-import { TaskContext } from '../Tasks'
 import dayjs from 'dayjs'
+import { observer } from 'mobx-react-lite'
+import { ITask } from '../../../../mst/types'
+import { useRoot$ } from '../../../../mst/StoreProvider'
+import { castToSnapshot } from 'mobx-state-tree'
 
 const { Text } = Typography
 
-export const Task: React.FC<{ task: ITask }> = ({ task }) => {
-    const { setTaskId } = useContext(TaskContext)
+export const Task: React.FC<{ task: ITask }> = observer(({ task }) => {
+    const { onChangeField } = useRoot$()
     return (
         <Card
             title={task.title}
@@ -17,7 +19,7 @@ export const Task: React.FC<{ task: ITask }> = ({ task }) => {
                 if ((e.target as unknown as HTMLElement).closest('.ant-checkbox-wrapper')) {
                     return
                 }
-                setTaskId(task.id)
+                onChangeField('selected_task', castToSnapshot(task.id))
             }}
         >
             <div className="flex w-full justify-between">
@@ -35,4 +37,4 @@ export const Task: React.FC<{ task: ITask }> = ({ task }) => {
             {task.is_author && <ToggleCompleteTask task={task} />}
         </Card>
     )
-}
+})

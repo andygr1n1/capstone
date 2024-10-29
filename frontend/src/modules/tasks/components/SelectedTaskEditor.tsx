@@ -1,47 +1,27 @@
 import React from 'react'
 import { Form, Input, DatePicker, Select, Button } from 'antd'
-import { ITask } from '../../../utils/types'
 import dayjs from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
+import { useRoot$ } from '../../../../mst/StoreProvider'
 dayjs.extend(customParseFormat)
 const { Option } = Select
 
 export const SelectedTaskEditor: React.FC<{
-    selectedTask: ITask
     toggleEditMode: () => void
-    toggleIsLoading: () => void
-    setSelectedTask: (task: ITask) => void
-}> = ({ selectedTask, toggleEditMode, toggleIsLoading, setSelectedTask }) => {
+}> = ({ toggleEditMode }) => {
+    const { selected_task, users, editTask } = useRoot$()
     const [form] = Form.useForm()
 
     const handleOk = async () => {
-        toggleIsLoading()
         form.validateFields()
-            .then(async values => {
-                const res = await fetch('/createTask', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRFToken': appCsrftoken,
-                    },
-                    body: JSON.stringify({ ...values, current_page: tasks_current_page, id: selectedTask.id }),
-                })
-                if (res.ok) {
-                    const data = await res.json()
-                    setSelectedTask(JSON.parse(data.task))
-                    toggleEditMode()
-                    form.resetFields()
-                } else {
-                    console.error('Failed to create task:', res.statusText)
-                }
-            })
-            .catch(info => {
-                console.error('Validate Failed:', info)
-            })
-            .finally(() => {
-                toggleIsLoading()
+            .then(async values => await editTask({ formData: { ...values, id: selected_task?.id } }))
+            .then(() => {
+                form.resetFields()
+                toggleEditMode()
             })
     }
+
+    if (!selected_task) return null
 
     return (
         <Form
@@ -50,9 +30,9 @@ export const SelectedTaskEditor: React.FC<{
             name="edit_task"
             onFinish={handleOk}
             initialValues={{
-                ...selectedTask,
-                deadline: selectedTask.deadline ? dayjs(selectedTask.deadline) : null,
-                users: selectedTask.users.map(user => user.id),
+                ...selected_task,
+                deadline: selected_task.deadline ? dayjs(selected_task.deadline) : null,
+                users: selected_task.users.map(user => user.id),
             }}
         >
             <Form.Item

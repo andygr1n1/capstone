@@ -1,18 +1,17 @@
 import React from 'react'
 import type { RadioChangeEvent } from 'antd'
 import { Radio } from 'antd'
-import { fetchSelectedTasks } from '../../../../utils/api/fetchSelectedTasks'
+import { useRoot$ } from '../../../../../mst/StoreProvider'
+import { observer } from 'mobx-react-lite'
 
-export const TasksFilterByState = () => {
-    const onChange = (e: RadioChangeEvent) => {
-        tasks_state = e.target.value
+export const TasksFilterByState = observer(() => {
+    const { fetchSelectedTasks, tasks_state } = useRoot$()
 
-        fetchSelectedTasks({ page: 1 })
-    }
+    const onChange = (e: RadioChangeEvent) => fetchSelectedTasks({ state: e.target.value })
 
     return (
         <div>
-            <Radio.Group block onChange={onChange} defaultValue="all">
+            <Radio.Group block onChange={onChange} defaultValue="active" value={tasks_state}>
                 <Radio.Button value="all">All</Radio.Button>
                 <Radio.Button value="active">Active</Radio.Button>
                 <Radio.Button value="expired">Expired</Radio.Button>
@@ -20,4 +19,4 @@ export const TasksFilterByState = () => {
             </Radio.Group>
         </div>
     )
-}
+})

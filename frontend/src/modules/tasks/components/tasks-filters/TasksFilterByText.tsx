@@ -1,15 +1,17 @@
 import React, { ChangeEvent, useMemo, useState } from 'react'
 import { Input } from 'antd'
 import { debounce } from 'lodash-es'
-import { fetchSelectedTasks } from '../../../../utils/api/fetchSelectedTasks'
+import { observer } from 'mobx-react-lite'
+import { useRoot$ } from '../../../../../mst/StoreProvider'
 
-export const TasksFilterByText = () => {
+export const TasksFilterByText = observer(() => {
     const [searchText, setSearchText] = useState('')
+    const { onChangeField, fetchSelectedTasks } = useRoot$()
 
     const onChangeServerSearchInput = useMemo(() => {
         return debounce(async (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-            tasks_search_text = e.target.value
-            await fetchSelectedTasks({ page: 1, searchText: e.target.value })
+            onChangeField('tasks_search_text', e.target.value)
+            fetchSelectedTasks()
         }, 1000)
     }, [])
 
@@ -20,7 +22,7 @@ export const TasksFilterByText = () => {
 
     return (
         <div>
-            <Input placeholder="Search..." value={searchText} onChange={onChange} />
+            <Input size={'large'} placeholder="Search..." value={searchText} onChange={onChange} />
         </div>
     )
-}
+})

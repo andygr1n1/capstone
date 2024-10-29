@@ -21,7 +21,7 @@ export const LogOutButton = () => {
 
     return (
         <Button
-            className={'w-full lg:w-auto'}
+            className={'w-full lg:w-auto animate-opacity-in'}
             size={isLgView ? 'middle' : 'large'}
             shape={isLgView ? 'round' : undefined}
             color="danger"

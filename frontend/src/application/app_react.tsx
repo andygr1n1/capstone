@@ -8,8 +8,8 @@ import { AnonymousLogin } from '../components/AnonymousLogin'
 import { Register } from '../components/Register'
 import { DashboardIndex } from '../modules/dashboard/DashboardIndex'
 import { Login } from '../components/Login'
-import { Tasks } from '../modules/tasks/Tasks'
 import { BrowserRouter } from 'react-router-dom'
+import { TasksIndex } from '../modules/tasks/TasksIndex'
 
 const root = document.getElementById('root')
 if (root) {
@@ -39,10 +39,14 @@ if (anonymousLoginRoot) {
 }
 
 const authenticatedLoginRoot = document.getElementById('authenticated-login')
-if (authenticatedLoginRoot) {
-    const authenticatedLoginRootElement = createRoot(authenticatedLoginRoot)
-    authenticatedLoginRootElement.render(<DashboardIndex />)
+
+export const dashboardRootElement = authenticatedLoginRoot ? createRoot(authenticatedLoginRoot) : null
+
+export const renderDashboardRoot = () => {
+    dashboardRootElement?.render(<DashboardIndex />)
 }
+
+renderDashboardRoot()
 
 const registerRoot = document.getElementById('register')
 if (registerRoot) {
@@ -61,7 +65,7 @@ const tasksRoot = document.getElementById('tasks')
 export const tasksRootElement = tasksRoot ? createRoot(tasksRoot) : null
 
 export const renderTasksRoot = () => {
-    tasksRootElement?.render(<Tasks />)
+    tasksRootElement?.render(<TasksIndex />)
 }
 
 renderTasksRoot()

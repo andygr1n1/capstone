@@ -12,28 +12,29 @@ declare let appUser: {
     email: string
 }
 
-declare let tasks: {
-    id: number
-    title: string
-    description: string
-    location: string
-    deadline: string
-    created_at: string
-    is_author: boolean
-    finished_at: string | null
-    users: {
-        id: number
-        username: string
-    }[]
-    messages: IMessage[]
-}[]
+// TODO AG delete this
+// declare let tasks: {
+//     id: number
+//     title: string
+//     description: string
+//     location: string
+//     deadline: string
+//     created_at: string
+//     is_author: boolean
+//     finished_at: string | null
+//     users: {
+//         id: number
+//         username: string
+//     }[]
+//     messages: IMessage[]
+// }[]
 
-declare let tasks_num_pages: number
-declare let tasks_current_page: number
-declare let tasks_search_text: string
-declare let tasks_state: string
+// declare let tasks_num_pages: number
+// declare let tasks_current_page: number
+// declare let tasks_search_text: string
+// declare let tasks_state: string
 
-declare const users: {
-    id: number
-    username: string
-}[]
+// declare let users: {
+//     id: number
+//     username: string
+// }[]

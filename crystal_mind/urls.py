@@ -14,6 +14,8 @@ urlpatterns = [
     path("toggleCompleteTask", views.toggleCompleteTask, name="toggleCompleteTask"),
     path("selectedTasks/<int:page>/<str:searchText>/<str:state>/", views.selectedTasks, name="selectedTasks"),
     path("selectedTasks/<int:page>/", views.selectedTasks, name="selectedTasks"),
+    path("fetchUsersAndTasks", views.fetchUsersAndTasks, name="fetchUsersAndTasks"),
     # Task Messenger
     path("sendMessage", views.sendMessage, name="sendMessage"),
+    path("fetchSelectedTasks", views.fetchSelectedTasks, name="fetchSelectedTasks"),
 ]

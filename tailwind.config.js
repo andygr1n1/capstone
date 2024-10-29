@@ -19,11 +19,20 @@ module.exports = {
         extend: {
             animation: {
                 'bounce-slow': 'bounce 8s ease-in-out infinite',
+                'opacity-in': 'opacity 0.500s ease-in',
             },
             keyframes: {
                 bounce: {
                     '0%, 100%': { transform: 'translateY(-25%)', easing: 'ease-in-out' },
                     '50%': { transform: 'translateY(0)', easing: 'ease-in-out' },
+                },
+                opacity: {
+                    '0%': {
+                        opacity: '0',
+                    },
+                    '100%': {
+                        opacity: '1',
+                    },
                 },
             },
         },
