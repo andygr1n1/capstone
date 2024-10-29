@@ -19,6 +19,7 @@
     },
     "rules": {
         "semi": 0,
-        "@typescript-eslint/no-empty-object-type": 0
+        "@typescript-eslint/no-empty-object-type": 0,
+        "@typescript-eslint/no-require-imports": 0
     }
 }
