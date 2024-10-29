@@ -34,6 +34,7 @@ export const Topbar = () => {
                                 <Button shape="round" type={selectedLocation('tasks')} href="/tasks">
                                     Tasks
                                 </Button>
+                                <div className="text-sm text-gray-500">connected as {appUser?.username}</div>
                             </div>
                             <LogOutButton />
                         </>

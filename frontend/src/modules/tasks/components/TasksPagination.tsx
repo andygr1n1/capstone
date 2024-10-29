@@ -4,11 +4,13 @@ import { observer } from 'mobx-react-lite'
 import { useRoot$ } from '../../../../mst/StoreProvider'
 
 export const TasksPagination = observer(() => {
-    const { tasks_num_pages, onChangeField, fetchSelectedTasks } = useRoot$()
+    const { tasks_num_pages, onChangeField, fetchSelectedTasks, tasks } = useRoot$()
     const onPageChange = async (page: number) => {
         onChangeField('tasks_current_page', page)
         fetchSelectedTasks()
     }
+    if (!tasks.length) return null
+
     return (
         <Pagination
             align="center"

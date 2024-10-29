@@ -36,10 +36,11 @@ export const SelectedTaskView: React.FC<{
                         <Text strong>Related Users: </Text>
                         <div className="flex flex-wrap gap-2 my-2">
                             {selected_task.users.map(user => (
-                                <Tag color="blue" key={user.id}>
+                                <Tag color={user.id === appUser?.id ? 'gold' : 'blue'} key={user.id}>
                                     {user.username}
                                 </Tag>
                             ))}
+                            {!selected_task.authorInUsers && <Tag color="gold">{selected_task.author?.username}</Tag>}
                         </div>
                     </div>
                     <Divider style={{ margin: '4px 0' }} />
